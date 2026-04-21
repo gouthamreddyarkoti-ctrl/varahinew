@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-0o($21(($8fy1fyf^bq6a(v@)l%t=svd(+6r35)o&3b0v104-w
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['https://shree-varahi-traders.onrender.com/','shree-varahi-traders.onrender.com','www.shree-varahi-traders.onrender.com']
+ALLOWED_HOSTS = ['shree-varahi-traders.onrender.com','www.shree-varahi-traders.onrender.com']
 
 
 # Application definition
@@ -136,3 +136,21 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'products' / 'static']
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+import os
+
+STATIC_URL = '/static/'
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
