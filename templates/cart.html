@@ -3,6 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Cart | Shree Varahi Traders</title>
     <style>
         body {
@@ -296,72 +297,10 @@
         }
 
         @media (max-width: 768px) {
-
-    /* Page layout */
-    .page {
-        flex-direction: column;
-        padding: 14px;
-        gap: 16px;
-    }
-
-    /* Header stack */
-    .header {
-        flex-direction: column;
-        gap: 8px;
-        text-align: center;
-        padding: 12px;
-    }
-
-    .header-logo span {
-        font-size: 18px;
-    }
-
-    /* Cart items */
-    .cart-item {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 12px;
-    }
-
-    .cart-item img {
-        width: 100%;
-        height: 180px;
-    }
-
-    .item-subtotal {
-        text-align: left;
-        width: 100%;
-    }
-
-    /* Quantity row */
-    .qty-row {
-        flex-wrap: wrap;
-        gap: 8px;
-    }
-
-    /* Summary box */
-    .summary-box {
-        position: static;
-        width: 100%;
-    }
-
-    /* Buttons full width */
-    .checkout-btn,
-    .whatsapp-btn {
-        font-size: 14px;
-        padding: 10px;
-    }
-
-    /* Sort bar */
-    .sort-bar {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .sort-bar select {
-        width: 100%;
-    }
-}
+            .page { flex-direction: column; padding: 16px; }
+            .cart-item { flex-wrap: wrap; }
+            .item-subtotal { text-align: left; }
+        }
     </style>
 </head>
 
