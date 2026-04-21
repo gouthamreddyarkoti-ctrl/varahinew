@@ -93,6 +93,13 @@
             color: #6b7280;
             white-space: nowrap;
         }
+        .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 30px;
+    background: #0c172f;
+}
 
         .container {
             display: grid;
@@ -225,40 +232,23 @@
 
        /* Main header layout */
     .header {
-        display: flex !important;
-        flex-direction: row !important;
-        justify-content: space-between !important;
-        align-items: center;
-        padding: 12px 14px;
-        text-align: unset;
+        justify-content: flex-start;
+        padding: 10px 12px;
     }
 
-    /* LEFT: logo + title */
-    .header div:nth-child(2) {
-        flex: unset !important;
-        display: flex;
-        justify-content: flex-start !important;
-        align-items: center;
-        gap: 8px;
+    .header span {
+        font-size: 16px !important;
     }
 
-    /* Logo image */
     .header img {
         height: 34px !important;
     }
 
-    /* Title text */
-    .header span {
-        font-size: 16px !important;
-        white-space: nowrap;
+    .header a {
+        font-size: 11px !important;
+        padding: 4px 8px !important;
+        border-radius: 5px !important;
     }
-
-    /* prevent center block interference */
-    .header div:nth-child(2),
-    .header div:nth-child(3) {
-        flex: unset !important;
-    }
-
     /* Thumbnail resize */
     .thumbs img {
         width: 50px;
