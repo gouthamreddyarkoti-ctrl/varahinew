@@ -223,64 +223,49 @@
 
         @media (max-width: 768px) {
 
-    /* Enable scrolling */
-    body {
-        overflow: auto;
-    }
-
-    /* Stack layout vertically */
-    .page-body {
-        flex-direction: column;
-        height: auto;
-    }
-
-    /* Full width sections */
-    .image-section,
-    .details {
-        width: 100%;
-        height: auto;
-        overflow: visible;
-    }
-
-    /* Fix image scaling */
-    .main-img {
-        max-height: 300px;
-    }
-
-     /* Header layout */
+       /* Main header layout */
     .header {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: space-between !important;
         align-items: center;
         padding: 10px 12px;
+        text-align: unset;
     }
 
-    /* Move logo + title to left */
+    /* LEFT: logo + title */
     .header div:nth-child(2) {
-        flex: 1;
+        flex: unset !important;
+        display: flex;
         justify-content: flex-start !important;
-        text-align: left;
+        align-items: center;
+        gap: 8px;
     }
 
-    /* About Us to right + smaller */
+    /* Logo image */
+    .header img {
+        height: 32px !important;
+    }
+
+    /* Title text */
+    .header span {
+        font-size: 16px !important;
+        white-space: nowrap;
+    }
+
+    /* RIGHT: About Us button */
     .header div:nth-child(3) a {
-        font-size: 11px;
-        padding: 5px 8px;
+        font-size: 14px !important;   /* same as other pages */
+        padding: 6px 10px;
         border-radius: 6px;
         white-space: nowrap;
     }
 
-    /* Logo text smaller */
-    .header span {
-        font-size: 16px !important;
+    /* prevent center block interference */
+    .header div:nth-child(2),
+    .header div:nth-child(3) {
+        flex: unset !important;
     }
-
-    /* Logo image adjust */
-    .header img {
-        height: 32px;
-    }
-
 
     /* Thumbnail resize */
     .thumbs img {

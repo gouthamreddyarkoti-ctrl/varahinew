@@ -399,12 +399,13 @@
         var countEl = document.getElementById('cartCount');
 
         if (cart.length === 0) {
-            container.innerHTML =
-                '<div class="empty-cart">' +
-                '<div class="icon">Cart</div>' +
-                '<p>Your cart is empty.</p>' +
-                '<a href="/" class="shop-btn">Browse Products</a>' +
-                '</div>';
+         container.innerHTML =
+        '<div class="empty-cart">' +
+        '<img src="https://cdn-icons-png.flaticon.com/512/2038/2038854.png" ' +
+        'style="width:120px; margin-bottom:12px;" alt="Empty Cart">' +
+        '<p>Your cart is empty</p>' +
+        '<a href="/" class="shop-btn">Browse Products</a>' +
+        '</div>';
             countEl.textContent = '';
             document.getElementById('summaryCount').textContent = 0;
             document.getElementById('summarySubtotal').textContent = '0';
