@@ -3,186 +3,184 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{{ product.name }} | Shree Varahi Traders</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shree Varahi Traders</title>
+    <link rel="icon" type="image/png" href="{% static 'images/logo.png' %}"> 
     <style>
-        * { box-sizing: border-box; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
             font-family: 'Segoe UI', Arial, sans-serif;
-            margin: 0;
             background: #f4f6f8;
-            overflow: hidden;
         }
 
-        .header {
-            background: #111827;
-            color: white;
-            padding: 15px 25px;
-            font-size: 20px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 100;
-            height: 56px;
-        }
-
-        .header a {
-            color: #d1d5db;
-            text-decoration: none;
-            font-size: 14px;
-        }
-
-        .header a:hover { color: #facc15; }
-
-        .page-body {
-            display: flex;
-            height: calc(100vh - 56px);
-            margin-top: 56px;
-        }
-
-        .image-section {
-            width: 50%;
+        .filter-bar {
             background: white;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            border-right: 1px solid #e5e7eb;
-            height: calc(100vh - 56px);
-            overflow: hidden;
-        }
-
-        .main-img {
-            width: 100%;
-            flex: 1;
-            object-fit: cover;
-            border-radius: 10px;
-            transition: opacity 0.3s ease;
-            display: block;
-            max-height: calc(100vh - 180px);
-        }
-
-        .thumbs {
+            padding: 14px 20px;
             display: flex;
             gap: 10px;
-            margin-top: 10px;
             flex-wrap: wrap;
+            align-items: center;
+            border-bottom: 1px solid #e5e7eb;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 50;
         }
 
-        .thumbs img {
-            width: 60px;
-            height: 60px;
-            object-fit: cover;
-            border-radius: 6px;
-            cursor: pointer;
-            border: 2px solid transparent;
+        .search-wrap {
+            position: relative;
+            flex: 1;
+            min-width: 180px;
         }
 
-        .thumbs img:hover { border: 2px solid #2563eb; }
-
-        .details {
-            width: 50%;
-            overflow-y: auto;
-            padding: 24px;
-            height: calc(100vh - 56px);
-            background: white;
-        }
-
-        .name { font-size: 24px; font-weight: 700; margin-bottom: 6px; }
-
-        .price {
-            font-size: 22px;
-            color: #16a34a;
-            font-weight: bold;
-            margin: 10px 0;
-        }
-
-        .info { font-size: 14px; margin: 5px 0; }
-
-        .section {
-            margin-top: 15px;
-            padding-top: 10px;
-            border-top: 1px solid #e5e7eb;
-        }
-
-        .section h3 { margin: 0 0 8px; font-size: 15px; }
-
-        .box {
-            background: #f9fafb;
-            padding: 12px;
+        .search-wrap input[type="text"] {
+            width: 100%;
+            padding: 9px 36px 9px 14px;
+            border: 1px solid #d1d5db;
             border-radius: 8px;
             font-size: 14px;
-            line-height: 1.6;
+            outline: none;
+            box-sizing: border-box;
         }
 
-        .buy-box {
-            margin-top: 15px;
-            padding: 15px;
-            border-radius: 12px;
-            background: #f9fafb;
-            border: 1px solid #e5e7eb;
-        }
+        .search-wrap input[type="text"]:focus { border-color: #2563eb; }
 
-        .btn {
-            display: block;
-            margin-top: 10px;
-            padding: 11px;
-            text-align: center;
-            border-radius: 8px;
-            color: white;
-            text-decoration: none;
+        .clear-x-btn {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
             border: none;
             cursor: pointer;
             font-size: 15px;
-            font-weight: 600;
-            font-family: 'Segoe UI', Arial, sans-serif;
-            width: 100%;
-            transition: background 0.2s;
+            color: #9ca3af;
+            padding: 0;
         }
 
-        .buy { background: #2563eb; }
-        .buy:hover { background: #1d4ed8; }
+        .clear-x-btn:hover { color: #374151; }
 
-        .whatsapp { background: #16a34a; }
-        .whatsapp:hover { background: #15803d; }
+        .filter-bar select {
+            padding: 9px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 14px;
+            background: white;
+            cursor: pointer;
+            outline: none;
+        }
 
-        .related { padding: 20px 0 0; }
-        .related h2 { font-size: 18px; margin-bottom: 14px; }
+        .filter-bar select:focus { border-color: #2563eb; }
 
-        .related-grid {
+        .clear-btn {
+            padding: 9px 16px;
+            background: #f3f4f6;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 13px;
+            cursor: pointer;
+            color: #374151;
+            font-weight: 500;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        .clear-btn:hover { background: #e5e7eb; }
+
+        .results-count {
+            font-size: 13px;
+            color: #6b7280;
+            white-space: nowrap;
+        }
+
+        .container {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-            gap: 12px;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 18px;
+            padding: 20px;
         }
 
-        .r-card {
-            background: #f9fafb;
-            padding: 8px;
-            border-radius: 10px;
-            text-align: center;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        .card-wrapper { display: flex; }
+
+        .card {
+            background: #ffffff;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            transition: 0.25s ease;
             text-decoration: none;
             color: inherit;
             display: block;
-            transition: transform 0.2s;
-            border: 1px solid #e5e7eb;
-        }
-
-        .r-card:hover { transform: translateY(-4px); }
-
-        .r-card img {
             width: 100%;
-            height: 100px;
-            object-fit: cover;
-            border-radius: 8px;
         }
 
-        .r-name { font-size: 13px; font-weight: 600; margin-top: 6px; }
-        .r-price { font-size: 13px; color: #16a34a; font-weight: bold; }
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+        }
+
+        .img-wrap { overflow: hidden; }
+
+        .card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+            display: block;
+        }
+
+        .card:hover img { transform: scale(1.08); }
+
+        .card-body { padding: 12px; }
+
+        .product-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 4px;
+        }
+
+        .category {
+            font-size: 12px;
+            color: #6b7280;
+            margin-bottom: 6px;
+        }
+
+        .price {
+            color: #16a34a;
+            font-weight: bold;
+            font-size: 18px;
+            margin: 6px 0;
+        }
+
+        .desc {
+            font-size: 12px;
+            color: #555;
+            line-height: 1.4;
+        }
+
+        .btn {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 10px;
+            background: #2563eb;
+            color: white;
+            font-size: 13px;
+            text-decoration: none;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .btn:hover { background: #1d4ed8; }
+
+        .no-results {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 60px 20px;
+            color: #6b7280;
+            font-size: 16px;
+        }
 
         .floating-cart {
             position: fixed;
@@ -190,6 +188,7 @@
             right: 28px;
             background: #111827;
             color: white;
+            border: none;
             border-radius: 50px;
             padding: 14px 22px;
             font-size: 15px;
@@ -199,7 +198,7 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            z-index: 200;
+            z-index: 100;
             text-decoration: none;
             transition: background 0.2s, transform 0.2s;
         }
@@ -207,30 +206,6 @@
         .floating-cart:hover {
             background: #1f2937;
             transform: translateY(-2px);
-        }
-        .qty-box {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            margin: 10px 0;
-        }
-
-        .qty-box input {
-            width: 60px;
-            text-align: center;
-            padding: 6px;
-            border: 1px solid #d1d5db;
-            border-radius: 6px;
-        }
-
-        .qty-box button {
-            width: 30px;
-            height: 30px;
-            border: none;
-            background: #2563eb;
-            color: white;
-            border-radius: 6px;
-            cursor: pointer;
         }
 
         .cart-badge {
@@ -247,134 +222,231 @@
         }
 
         @media (max-width: 768px) {
-            body { overflow: auto; }
-            .page-body { flex-direction: column; height: auto; }
-            .image-section { width: 100%; height: auto; }
-            .details { width: 100%; height: auto; overflow: visible; }
-        }
+
+    /* Enable scrolling */
+    body {
+        overflow: auto;
+    }
+
+    /* Stack layout vertically */
+    .page-body {
+        flex-direction: column;
+        height: auto;
+    }
+
+    /* Full width sections */
+    .image-section,
+    .details {
+        width: 100%;
+        height: auto;
+        overflow: visible;
+    }
+
+    /* Fix image scaling */
+    .main-img {
+        max-height: 300px;
+    }
+
+    /* Header adjustment */
+    .header {
+        flex-direction: column;
+        gap: 8px;
+        height: auto;
+        padding: 10px;
+        text-align: center;
+    }
+
+    /* Thumbnail resize */
+    .thumbs img {
+        width: 50px;
+        height: 50px;
+    }
+
+    /* Quantity box spacing */
+    .qty-box {
+        justify-content: center;
+    }
+
+    /* Buttons easier to tap */
+    .btn {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    /* Floating cart fix */
+    .floating-cart {
+        bottom: 12px;
+        right: 12px;
+        padding: 10px 14px;
+        font-size: 13px;
+    }
+
+    .cart-badge {
+        width: 18px;
+        height: 18px;
+        font-size: 10px;
+    }
+}
     </style>
 </head>
-
 <body>
 
-<div class="header">
-    <div style="display:flex;align-items:center;justify-content:center;gap:10px;">
-        <img src="{% static 'images/logo.png' %}" style="height:40px;">
-        <span style="font-size:22px;font-weight:600;color:#facc15;">Shree Varahi Traders</span>
+<div style="display:flex; align-items:center; justify-content:space-between; padding:15px 30px; background:#111827;">
+    
+    <div style="flex: 1;"></div>
+
+    <div style="display:flex; align-items:center; gap:12px; flex: 2; justify-content:center;">
+        <img src="{% static 'images/logo.png' %}" style="height:40px;" alt="Logo">
+        <span style="font-size:24px; font-weight:600; color:#facc15; white-space: nowrap;">Shree Varahi Traders</span>
     </div>
-  <a href="{% url 'product_list' %}" title="Home">
-    <img src="https://cdn-icons-png.flaticon.com/512/25/25694.png"
-         alt="Home"
-         style="width:22px; height:22px; filter: invert(1);">
-</a>
+
+    <div style="flex: 1; display: flex; justify-content: flex-end;">
+        <a href="{% url 'about' %}" style="background:#344c80; color:white; text-decoration:none; padding:8px 18px; border-radius:8px; font-size:14px; font-weight:600;">
+            About Us
+        </a>
+    </div>
+</div>
+<!-- Filter Bar -->
+<div class="filter-bar">
+
+    <div class="search-wrap">
+        <input type="text" id="searchInput" placeholder="Search by name..." oninput="filterProducts()">
+        <button class="clear-x-btn" onclick="clearSearch()">✕</button>
+    </div>
+
+    <select id="categoryFilter" onchange="filterProducts()">
+        <option value="">All Categories</option>
+        {% for product in products %}
+            <option value="{{ product.category.name }}">{{ product.category.name }}</option>
+        {% endfor %}
+    </select>
+
+    <select id="materialFilter" onchange="filterProducts()">
+        <option value="">All Materials</option>
+        {% for product in products %}
+            <option value="{{ product.material }}">{{ product.material }}</option>
+        {% endfor %}
+    </select>
+
+    <select id="sortFilter" onchange="filterProducts()">
+        <option value="">Sort By</option>
+        <option value="price_asc">Price: Low to High</option>
+        <option value="price_desc">Price: High to Low</option>
+        <option value="name_asc">Name: A to Z</option>
+        <option value="name_desc">Name: Z to A</option>
+    </select>
+
+    <button class="clear-btn" onclick="clearFilters()">✕ Clear</button>
+
+    <!-- ONE results count only -->
+    <span class="results-count" id="resultsCount"></span>
+
 </div>
 
-<div class="page-body">
-
-    <div class="image-section">
-        {% if product.image %}
-            <img id="mainImage" class="main-img" src="{{ product.image.url }}" alt="{{ product.name }}">
-        {% elif product.images.first %}
-            <img id="mainImage" class="main-img" src="{{ product.images.first.image.url }}" alt="{{ product.name }}">
-        {% else %}
-            <img id="mainImage" class="main-img" src="https://placehold.co/600x400/e5e7eb/9ca3af?text=No+Image" alt="No Image">
-        {% endif %}
-
-        <div class="thumbs">
-            {% if product.image %}
-                <img src="{{ product.image.url }}" alt="Main">
-            {% endif %}
-            {% for img in product.images.all %}
-                <img src="{{ img.image.url }}" alt="View {{ forloop.counter }}">
-            {% endfor %}
-        </div>
-    </div>
-
-    <div class="details">
-
-        <div class="name">{{ product.name }}</div>
-        <div class="price">Rs. {{ product.price }}</div>
-        <div class="info"><b>Category:</b> {{ product.category.name }}</div>
-        <div class="info"><b>Material:</b> {{ product.material }}</div>
-
-        <div class="section">
-            <h3>Description</h3>
-            <div class="box">{{ product.description }}</div>
-        </div>
-
-        <div class="section">
-            <h3>Additional Information</h3>
-            <div class="box">
-                {% if product.extra_info %}
-                    {{ product.extra_info }}
+<!-- Product Grid -->
+<div class="container" id="productGrid">
+    {% for product in products %}
+    <div class="card-wrapper"
+         data-name="{{ product.name|lower }}"
+         data-category="{{ product.category.name }}"
+         data-material="{{ product.material }}"
+         data-price="{{ product.price }}">
+        <a href="{% url 'product_detail' product.id %}" class="card">
+            <div class="img-wrap">
+                {% if product.image %}
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}">
                 {% else %}
-                    No additional information available.
+                    <img src="https://placehold.co/300x200/e5e7eb/9ca3af?text=No+Image" alt="No Image">
                 {% endif %}
             </div>
-        </div>
-        <div class="qty-label">Quantity</div>
-        <div class="qty-box">
-            <button type="button" onclick="changeQty(-1)">−</button>
-            <input type="number" id="qtyInput" value="1" min="1">
-            <button type="button" onclick="changeQty(1)">+</button>
-        </div>
-
-        <div class="buy-box">
-            <div style="font-weight:600; margin-bottom:4px;">Shop now</div>
-            <button class="btn buy"
-                id="addCartBtn"
-                data-id="{{ product.id }}"
-                data-name="{{ product.name }}"
-                data-price="{{ product.price }}"
-                data-image="{% if product.image %}{{ product.image.url }}{% endif %}"
-                data-category="{{ product.category.name }}"
-                data-material="{{ product.material }}">
-                Add to Cart
-            </button>
-
-            <a href="https://wa.me/918639556127?text=I%20am%20interested%20in%20{{ product.name }}%20-%20Rs.{{ product.price }}"
-               class="btn whatsapp" target="_blank">Order via WhatsApp</a>
-        </div>
-
-        {% if related_products %}
-        <div class="related">
-            <h2>Related Products</h2>
-            <div class="related-grid">
-                {% for p in related_products %}
-                <a href="{% url 'product_detail' p.id %}" class="r-card">
-                    {% if p.image %}
-                        <img src="{{ p.image.url }}" alt="{{ p.name }}">
-                    {% elif p.images.first %}
-                        <img src="{{ p.images.first.image.url }}" alt="{{ p.name }}">
-                    {% else %}
-                        <img src="https://placehold.co/300x200/e5e7eb/9ca3af?text=No+Image" alt="No Image">
-                    {% endif %}
-                    <div class="r-name">{{ p.name }}</div>
-                    <div class="r-price">Rs. {{ p.price }}</div>
-                </a>
-                {% endfor %}
+            <div class="card-body">
+                <div class="product-name">{{ product.name }}</div>
+                <div class="category">{{ product.category.name }} — {{ product.material }}</div>
+                <div class="price">Rs. {{ product.price }}</div>
+                <div class="desc">{{ product.description|truncatechars:90 }}</div>
+                <div class="btn">View Details</div>
             </div>
-        </div>
-        {% endif %}
-
+        </a>
     </div>
+    {% empty %}
+        <div class="no-results">No products available.</div>
+    {% endfor %}
 </div>
 
-<a href="{% url 'cart' %}" class="floating-cart" id="floatingCart">
-    Cart <div class="cart-badge" id="cartBadge">0</div>
+<!-- Floating Cart -->
+<a href="{% url 'cart' %}" class="floating-cart">
+    🛒 Cart <div class="cart-badge" id="cartBadge">0</div>
 </a>
 
 <script>
-    document.querySelectorAll('.thumbs img').forEach(function(img) {
-        img.addEventListener('click', function() {
-            var main = document.getElementById('mainImage');
-            main.style.opacity = '0';
-            setTimeout(function() {
-                main.src = img.src;
-                main.style.opacity = '1';
-            }, 150);
+    function dedupeSelect(id) {
+        var sel = document.getElementById(id);
+        var seen = new Set();
+        Array.from(sel.options).forEach(function(opt) {
+            if (opt.value === '') { seen.add(''); return; }
+            if (seen.has(opt.value)) { opt.remove(); }
+            else { seen.add(opt.value); }
         });
-    });
+    }
+    dedupeSelect('categoryFilter');
+    dedupeSelect('materialFilter');
+
+    function filterProducts() {
+        var search   = document.getElementById('searchInput').value.toLowerCase().trim();
+        var category = document.getElementById('categoryFilter').value;
+        var material = document.getElementById('materialFilter').value;
+        var sort     = document.getElementById('sortFilter').value;
+
+        var grid  = document.getElementById('productGrid');
+        var cards = Array.from(grid.querySelectorAll('.card-wrapper'));
+
+        var oldNoRes = document.getElementById('noResults');
+        if (oldNoRes) { oldNoRes.remove(); }
+
+        var visible = cards.filter(function(card) {
+            return (!search   || card.dataset.name.includes(search)) &&
+                   (!category || card.dataset.category === category) &&
+                   (!material || card.dataset.material === material);
+        });
+
+        cards.forEach(function(c) { c.style.display = 'none'; });
+        visible.forEach(function(c) { c.style.display = ''; });
+
+        if (sort) {
+            visible.sort(function(a, b) {
+                if (sort === 'price_asc')  return parseFloat(a.dataset.price) - parseFloat(b.dataset.price);
+                if (sort === 'price_desc') return parseFloat(b.dataset.price) - parseFloat(a.dataset.price);
+                if (sort === 'name_asc')   return a.dataset.name.localeCompare(b.dataset.name);
+                if (sort === 'name_desc')  return b.dataset.name.localeCompare(a.dataset.name);
+                return 0;
+            });
+            visible.forEach(function(c) { grid.appendChild(c); });
+        }
+
+        if (visible.length === 0) {
+            var noRes = document.createElement('div');
+            noRes.id = 'noResults';
+            noRes.className = 'no-results';
+            noRes.textContent = 'No products match your filters.';
+            grid.appendChild(noRes);
+        }
+
+        document.getElementById('resultsCount').textContent =
+            visible.length + ' product' + (visible.length !== 1 ? 's' : '') + ' found';
+    }
+
+    function clearSearch() {
+        document.getElementById('searchInput').value = '';
+        filterProducts();
+    }
+
+    function clearFilters() {
+        document.getElementById('searchInput').value    = '';
+        document.getElementById('categoryFilter').value = '';
+        document.getElementById('materialFilter').value = '';
+        document.getElementById('sortFilter').value     = '';
+        filterProducts();
+    }
 
     function getCart() {
         return JSON.parse(localStorage.getItem('varahi_cart') || '[]');
@@ -384,47 +456,35 @@
         localStorage.setItem('varahi_cart', JSON.stringify(cart));
         updateBadge();
     }
+
     function updateBadge() {
-        var cart = getCart();
+        var cart  = getCart();
         var total = cart.reduce(function(sum, i) { return sum + i.qty; }, 0);
         document.getElementById('cartBadge').textContent = total;
     }
-    function changeQty(delta) {
-        const input = document.getElementById('qtyInput');
-        let value = parseInt(input.value) || 1;
-        value += delta;
-        if (value < 1) value = 1;
-        input.value = value;
-    }
 
-    document.getElementById('addCartBtn').addEventListener('click', function() {
-        var btn = this;
-        var id = btn.dataset.id;
-        var name = btn.dataset.name;
-        var price = parseFloat(btn.dataset.price);
-        var image = btn.dataset.image;
-        var category = btn.dataset.category;
-        var material = btn.dataset.material;
-
-        var cart = getCart();
-        var qty = parseInt(document.getElementById('qtyInput').value) || 1;
-        var index = cart.findIndex(function(i) { return i.id === id; });
-        if (index > -1) {
-            cart[index].qty += qty;
-        } else {
-            cart.push({ id: id, name: name, price: price, image: image, category: category, material: material, qty: qty });
+    document.addEventListener('click', function(e) {
+        if (e.target.classList.contains('add-cart-btn')) {
+            var btn  = e.target;
+            var cart = getCart();
+            var index = cart.findIndex(function(i) { return i.id === btn.dataset.id; });
+            if (index > -1) {
+                cart[index].qty += 1;
+            } else {
+                cart.push({
+                    id: btn.dataset.id, name: btn.dataset.name,
+                    price: parseFloat(btn.dataset.price), image: btn.dataset.image,
+                    category: btn.dataset.category, material: btn.dataset.material, qty: 1
+                });
+            }
+            saveCart(cart);
+            btn.textContent = 'Added!';
+            setTimeout(function() { btn.textContent = 'Add to Cart'; }, 1200);
         }
-        saveCart(cart);
-
-        btn.textContent = 'Added to Cart!';
-        btn.style.background = '#15803d';
-        setTimeout(function() {
-            btn.textContent = 'Add to Cart';
-            btn.style.background = '#2563eb';
-        }, 1200);
     });
 
     updateBadge();
+    filterProducts();
 </script>
 
 </body>

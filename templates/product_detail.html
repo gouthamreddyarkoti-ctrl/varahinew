@@ -3,7 +3,6 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ product.name }} | Shree Varahi Traders</title>
     <style>
         * { box-sizing: border-box; }
@@ -12,12 +11,13 @@
             font-family: 'Segoe UI', Arial, sans-serif;
             margin: 0;
             background: #f4f6f8;
+            overflow: hidden;
         }
 
         .header {
             background: #111827;
             color: white;
-            padding: 12px 20px;
+            padding: 15px 25px;
             font-size: 20px;
             font-weight: 600;
             display: flex;
@@ -39,11 +39,10 @@
 
         .header a:hover { color: #facc15; }
 
-        /* Desktop: side-by-side layout */
         .page-body {
             display: flex;
+            height: calc(100vh - 56px);
             margin-top: 56px;
-            min-height: calc(100vh - 56px);
         }
 
         .image-section {
@@ -53,8 +52,6 @@
             display: flex;
             flex-direction: column;
             border-right: 1px solid #e5e7eb;
-            position: sticky;
-            top: 56px;
             height: calc(100vh - 56px);
             overflow: hidden;
         }
@@ -85,12 +82,13 @@
             border: 2px solid transparent;
         }
 
-        .thumbs img:hover, .thumbs img.active { border: 2px solid #2563eb; }
+        .thumbs img:hover { border: 2px solid #2563eb; }
 
         .details {
             width: 50%;
             overflow-y: auto;
             padding: 24px;
+            height: calc(100vh - 56px);
             background: white;
         }
 
@@ -157,7 +155,7 @@
 
         .related-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
             gap: 12px;
         }
 
@@ -210,14 +208,11 @@
             background: #1f2937;
             transform: translateY(-2px);
         }
-
-        .qty-label { font-size: 14px; font-weight: 600; margin-top: 14px; margin-bottom: 6px; }
-
         .qty-box {
             display: flex;
             align-items: center;
             gap: 6px;
-            margin-bottom: 10px;
+            margin: 10px 0;
         }
 
         .qty-box input {
@@ -226,19 +221,16 @@
             padding: 6px;
             border: 1px solid #d1d5db;
             border-radius: 6px;
-            font-size: 15px;
         }
 
         .qty-box button {
-            width: 32px;
-            height: 32px;
+            width: 30px;
+            height: 30px;
             border: none;
             background: #2563eb;
             color: white;
             border-radius: 6px;
             cursor: pointer;
-            font-size: 18px;
-            line-height: 1;
         }
 
         .cart-badge {
@@ -254,89 +246,28 @@
             justify-content: center;
         }
 
-        /* ── MOBILE RESPONSIVE ── */
-        @media (max-width: 768px) {
-            body { overflow: auto; }
+            @media (max-width: 768px) {
+        /* your OLD mobile styles */
+    }
 
-            .page-body {
-                flex-direction: column;
-            }
-
-            /* Image section: no longer sticky/fixed height on mobile */
-            .image-section {
-                width: 100%;
-                height: auto;
-                position: static;
-                padding: 12px;
-                border-right: none;
-                border-bottom: 1px solid #e5e7eb;
-            }
-
-            .main-img {
-                max-height: 280px;
-                height: 280px;
-                flex: none;
-                width: 100%;
-                object-fit: cover;
-            }
-
-            .thumbs img {
-                width: 52px;
-                height: 52px;
-            }
-
-            /* Details: full width, no overflow scroll */
-            .details {
-                width: 100%;
-                height: auto;
-                overflow: visible;
-                padding: 16px;
-            }
-
-            .name { font-size: 20px; }
-            .price { font-size: 20px; }
-
-            .related-grid {
-                grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
-                gap: 8px;
-            }
-
-            .floating-cart {
-                bottom: 16px;
-                right: 16px;
-                padding: 11px 16px;
-                font-size: 13px;
-            }
-
-            .header {
-                padding: 10px 14px;
-            }
-
-            .header .logo-text {
-                font-size: clamp(14px, 4vw, 20px);
-            }
-        }
-
-        @media (max-width: 400px) {
-            .main-img { max-height: 220px; height: 220px; }
-            .name { font-size: 18px; }
-            .related-grid { grid-template-columns: repeat(2, 1fr); }
-        }
+    @media (max-width: 768px) {
+        /* your NEW improved mobile styles */
+    }
     </style>
 </head>
 
 <body>
 
 <div class="header">
-    <div style="display:flex;align-items:center;gap:8px;">
-        <img src="{% static 'images/logo.png' %}" style="height:36px;">
-        <span class="logo-text" style="font-size:clamp(14px,4vw,22px);font-weight:600;color:#facc15;">Shree Varahi Traders</span>
+    <div style="display:flex;align-items:center;justify-content:center;gap:10px;">
+        <img src="{% static 'images/logo.png' %}" style="height:40px;">
+        <span style="font-size:22px;font-weight:600;color:#facc15;">Shree Varahi Traders</span>
     </div>
-    <a href="{% url 'product_list' %}" title="Home">
-        <img src="https://cdn-icons-png.flaticon.com/512/25/25694.png"
-             alt="Home"
-             style="width:22px; height:22px; filter: invert(1);">
-    </a>
+  <a href="{% url 'product_list' %}" title="Home">
+    <img src="https://cdn-icons-png.flaticon.com/512/25/25694.png"
+         alt="Home"
+         style="width:22px; height:22px; filter: invert(1);">
+</a>
 </div>
 
 <div class="page-body">
@@ -382,7 +313,6 @@
                 {% endif %}
             </div>
         </div>
-
         <div class="qty-label">Quantity</div>
         <div class="qty-box">
             <button type="button" onclick="changeQty(-1)">−</button>
@@ -432,7 +362,7 @@
 </div>
 
 <a href="{% url 'cart' %}" class="floating-cart" id="floatingCart">
-    🛒 Cart <div class="cart-badge" id="cartBadge">0</div>
+    Cart <div class="cart-badge" id="cartBadge">0</div>
 </a>
 
 <script>
@@ -444,8 +374,6 @@
                 main.src = img.src;
                 main.style.opacity = '1';
             }, 150);
-            document.querySelectorAll('.thumbs img').forEach(function(t) { t.classList.remove('active'); });
-            img.classList.add('active');
         });
     });
 
@@ -457,13 +385,11 @@
         localStorage.setItem('varahi_cart', JSON.stringify(cart));
         updateBadge();
     }
-
     function updateBadge() {
         var cart = getCart();
         var total = cart.reduce(function(sum, i) { return sum + i.qty; }, 0);
         document.getElementById('cartBadge').textContent = total;
     }
-
     function changeQty(delta) {
         const input = document.getElementById('qtyInput');
         let value = parseInt(input.value) || 1;
