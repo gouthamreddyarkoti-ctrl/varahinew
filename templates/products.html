@@ -255,9 +255,9 @@
 
     /* RIGHT: About Us button */
     .header div:nth-child(3) a {
-        font-size: 14px !important;   /* same as other pages */
-        padding: 6px 10px;
-        border-radius: 6px;
+        font-size: 12px !important;   /* same as other pages */
+        padding: 5px 10px;
+        border-radius: 4px;
         white-space: nowrap;
     }
 
@@ -327,9 +327,7 @@
     </div>
 
     <div style="flex: 1; display: flex; justify-content: flex-end;">
-        <a href="{% url 'about' %}" style="background:#344c80; color:white; text-decoration:none; padding:8px 18px; border-radius:8px; font-size:14px; font-weight:600;">
-            About Us
-        </a>
+       <a href="{% url 'about' %}" class="about-btn">About Us</a>
     </div>
 </div>
 <!-- Filter Bar -->
