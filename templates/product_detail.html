@@ -457,6 +457,97 @@
             btn.textContent = 'Add to Cart';
             btn.style.background = '#2563eb';
         }, 1200);
+        let startX = 0;
+let endX = 0;
+
+const mainImage = document.getElementById('mainImage');
+const images = Array.from(document.querySelectorAll('.thumbs img'));
+
+let currentIndex = 0;
+
+// Set initial image index
+if (images.length > 0) {
+    currentIndex = 0;
+}
+
+// -------------------------------
+// THUMB CLICK (keep your feature)
+// -------------------------------
+images.forEach((img, index) => {
+    img.addEventListener('click', function () {
+        showImage(index);
+    });
+});
+
+// -------------------------------
+// SWIPE (MOBILE)
+// -------------------------------
+mainImage.addEventListener('touchstart', function (e) {
+    startX = e.touches[0].clientX;
+});
+
+mainImage.addEventListener('touchend', function (e) {
+    endX = e.changedTouches[0].clientX;
+    handleSwipe();
+});
+
+function handleSwipe() {
+    let diff = startX - endX;
+
+    if (Math.abs(diff) < 50) return; // ignore small swipe
+
+    if (diff > 0) {
+        nextImage(); // swipe left
+    } else {
+        prevImage(); // swipe right
+    }
+}
+
+// -------------------------------
+// KEYBOARD (DESKTOP)
+// -------------------------------
+document.addEventListener('keydown', function (e) {
+
+    const activeTag = document.activeElement.tagName.toLowerCase();
+
+    // Prevent conflict when typing
+    if (activeTag === 'input' || activeTag === 'textarea') return;
+
+    if (e.key === 'ArrowRight') {
+        nextImage();
+    }
+
+    if (e.key === 'ArrowLeft') {
+        prevImage();
+    }
+});
+
+// -------------------------------
+// IMAGE CHANGE LOGIC
+// -------------------------------
+function showImage(index) {
+    if (images.length === 0) return;
+
+    if (index < 0) index = images.length - 1;
+    if (index >= images.length) index = 0;
+
+    currentIndex = index;
+
+    mainImage.style.opacity = "0";
+
+    setTimeout(() => {
+        mainImage.src = images[currentIndex].src;
+        mainImage.style.opacity = "1";
+    }, 150);
+}
+
+function nextImage() {
+    showImage(currentIndex + 1);
+}
+
+function prevImage() {
+    showImage(currentIndex - 1);
+}
     });
 
     updateBadge();

@@ -46,19 +46,15 @@
         .header a:hover { color: #facc15; }
 
         .page {
-    display: flex;
-    gap: 24px;
-    padding: 24px;
-    max-width: 1200px;
-    margin: 0 auto;
-    align-items: flex-start;
-}
+            display: flex;
+            gap: 24px;
+            padding: 24px;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
 
         .cart-left { flex: 2; min-width: 320px; }
-        .cart-right {
-    flex: 1;
-    min-width: 300px;
-}
 
         .cart-title {
             font-size: 22px;
@@ -299,24 +295,12 @@
             text-align: center;
             margin-top: 12px;
         }
-@media (max-width: 768px) {
-    .page {
-        flex-direction: column;
-        padding: 16px;
-    }
 
-    .cart-item {
-        flex-direction: column;
-    }
-
-    .item-subtotal {
-        text-align: left;
-    }
-
-    .summary-box {
-        position: static;
-    }
-}
+        @media (max-width: 768px) {
+            .page { flex-direction: column; padding: 16px; }
+            .cart-item { flex-wrap: wrap; }
+            .item-subtotal { text-align: left; }
+        }
     </style>
 </head>
 
@@ -327,7 +311,11 @@
         <img src="{% static 'images/logo.png' %}" alt="Logo">
         <span style="font-size:22px;font-weight:600;color:#facc15;">Shree Varahi Traders</span>
     </div>
-    <a href="{% url 'product_list' %}">&#8592;Back</a>
+   <a href="{% url 'product_list' %}" title="Home">
+    <img src="https://cdn-icons-png.flaticon.com/512/25/25694.png"
+         alt="Home"
+         style="width:22px; height:22px; filter: invert(1);">
+</a>
 </div>
 
 <div class="page">
