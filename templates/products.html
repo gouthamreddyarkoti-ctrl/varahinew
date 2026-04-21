@@ -229,7 +229,7 @@
         flex-direction: row !important;
         justify-content: space-between !important;
         align-items: center;
-        padding: 10px 12px;
+        padding: 12px 14px;
         text-align: unset;
     }
 
@@ -244,20 +244,12 @@
 
     /* Logo image */
     .header img {
-        height: 32px !important;
+        height: 34px !important;
     }
 
     /* Title text */
     .header span {
         font-size: 16px !important;
-        white-space: nowrap;
-    }
-
-    /* RIGHT: About Us button */
-    .header div:nth-child(3) a {
-        font-size: 12px !important;   /* same as other pages */
-        padding: 5px 10px;
-        border-radius: 4px;
         white-space: nowrap;
     }
 
@@ -327,7 +319,9 @@
     </div>
 
     <div style="flex: 1; display: flex; justify-content: flex-end;">
-       <a href="{% url 'about' %}" class="about-btn">About Us</a>
+        <a href="{% url 'about' %}" style="background:#344c80; color:white; text-decoration:none; padding:5px 10px; border-radius:6px; font-size:8px; font-weight:400;">
+            About Us
+        </a>
     </div>
 </div>
 <!-- Filter Bar -->
