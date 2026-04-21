@@ -3,6 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Cart | Shree Varahi Traders</title>
     <style>
         body {
@@ -14,7 +15,7 @@
         .header {
             background: #111827;
             color: white;
-            padding: 15px 25px;
+            padding: 12px 20px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -26,12 +27,10 @@
             gap: 10px;
         }
 
-        .header-logo img {
-            height: 40px;
-        }
+        .header-logo img { height: 36px; }
 
         .header-logo span {
-            font-size: 22px;
+            font-size: clamp(15px, 4vw, 22px);
             font-weight: 600;
             color: #facc15;
         }
@@ -40,6 +39,7 @@
             color: #d1d5db;
             text-decoration: none;
             font-size: 14px;
+            white-space: nowrap;
         }
 
         .header a:hover { color: #facc15; }
@@ -53,7 +53,7 @@
             margin: 0 auto;
         }
 
-        .cart-left { flex: 2; min-width: 320px; }
+        .cart-left { flex: 2; min-width: 280px; }
 
         .cart-title {
             font-size: 22px;
@@ -93,49 +93,50 @@
         .cart-item {
             background: white;
             border-radius: 12px;
-            padding: 16px;
+            padding: 14px;
             display: flex;
-            gap: 16px;
+            gap: 14px;
             margin-bottom: 14px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.07);
             align-items: flex-start;
         }
 
         .cart-item img {
-            width: 110px;
-            height: 110px;
+            width: 100px;
+            height: 100px;
             object-fit: cover;
             border-radius: 8px;
             flex-shrink: 0;
             border: 1px solid #e5e7eb;
         }
 
-        .item-info { flex: 1; }
+        .item-info { flex: 1; min-width: 0; }
 
         .item-name {
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 600;
             color: #111827;
-            margin-bottom: 4px;
+            margin-bottom: 3px;
         }
 
         .item-meta {
             font-size: 12px;
             color: #6b7280;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
 
         .item-price {
-            font-size: 18px;
+            font-size: 17px;
             font-weight: 700;
             color: #16a34a;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
 
         .qty-row {
             display: flex;
             align-items: center;
             gap: 10px;
+            flex-wrap: wrap;
         }
 
         .qty-box {
@@ -186,11 +187,12 @@
             text-align: right;
             white-space: nowrap;
             align-self: center;
+            flex-shrink: 0;
         }
 
         .item-subtotal span {
             display: block;
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 700;
             color: #111827;
         }
@@ -217,7 +219,7 @@
             font-size: 14px;
         }
 
-        .cart-right { flex: 1; min-width: 280px; }
+        .cart-right { flex: 1; min-width: 260px; }
 
         .summary-box {
             background: white;
@@ -295,10 +297,45 @@
             margin-top: 12px;
         }
 
-        @media (max-width: 768px) {
-            .page { flex-direction: column; padding: 16px; }
-            .cart-item { flex-wrap: wrap; }
-            .item-subtotal { text-align: left; }
+        /* ── MOBILE RESPONSIVE ── */
+        @media (max-width: 640px) {
+            .page {
+                flex-direction: column;
+                padding: 12px;
+                gap: 16px;
+            }
+
+            .cart-left, .cart-right {
+                min-width: 0;
+                width: 100%;
+            }
+
+            .cart-title { font-size: 19px; }
+
+            .cart-item {
+                padding: 11px;
+                gap: 10px;
+            }
+
+            .cart-item img {
+                width: 75px;
+                height: 75px;
+            }
+
+            .item-name { font-size: 13px; }
+            .item-meta { font-size: 11px; }
+            .item-price { font-size: 15px; margin-bottom: 8px; }
+
+            .qty-btn { padding: 5px 10px; font-size: 15px; }
+            .qty-num { padding: 5px 10px; font-size: 14px; min-width: 30px; }
+
+            .item-subtotal { display: none; } /* subtotal shown in item-price on mobile */
+
+            .summary-box { position: static; }
+
+            .summary-row.total { font-size: 16px; }
+
+            .checkout-btn, .whatsapp-btn { font-size: 14px; padding: 11px; }
         }
     </style>
 </head>
@@ -308,9 +345,9 @@
 <div class="header">
     <div class="header-logo">
         <img src="{% static 'images/logo.png' %}" alt="Logo">
-        <span style="font-size:22px;font-weight:600;color:#facc15;">Shree Varahi Traders</span>
+        <span>Shree Varahi Traders</span>
     </div>
-    <a href="{% url 'product_list' %}">Continue Shopping</a>
+    <a href="{% url 'product_list' %}">&#8592; Continue Shopping</a>
 </div>
 
 <div class="page">
@@ -396,7 +433,7 @@
         if (cart.length === 0) {
             container.innerHTML =
                 '<div class="empty-cart">' +
-                '<div class="icon">Cart</div>' +
+                '<div class="icon">🛒</div>' +
                 '<p>Your cart is empty.</p>' +
                 '<a href="/" class="shop-btn">Browse Products</a>' +
                 '</div>';
@@ -421,9 +458,9 @@
 
             html +=
                 '<div class="cart-item">' +
-                '<img src="' + (item.image || 'https://placehold.co/110x110/e5e7eb/9ca3af?text=No+Image') + '" ' +
+                '<img src="' + (item.image || 'https://placehold.co/100x100/e5e7eb/9ca3af?text=No+Image') + '" ' +
                 'alt="' + item.name + '" ' +
-                'onerror="this.src=\'https://placehold.co/110x110/e5e7eb/9ca3af?text=No+Image\'">' +
+                'onerror="this.src=\'https://placehold.co/100x100/e5e7eb/9ca3af?text=No+Image\'">' +
                 '<div class="item-info">' +
                 '<div class="item-name">' + item.name + '</div>' +
                 '<div class="item-meta">' + item.category + ' - ' + item.material + '</div>' +
