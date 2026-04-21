@@ -247,15 +247,40 @@
         max-height: 300px;
     }
 
-    /* Header adjustment */
-   .header a {
-        .header a {
-        font-size: 10px;
-        padding: 4px 8px;
-        border-radius: 5px;
-        font-weight: 500;
+     /* Header layout */
+    .header {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 12px;
     }
-}
+
+    /* Move logo + title to left */
+    .header div:nth-child(2) {
+        flex: 1;
+        justify-content: flex-start !important;
+        text-align: left;
+    }
+
+    /* About Us to right + smaller */
+    .header div:nth-child(3) a {
+        font-size: 11px;
+        padding: 5px 8px;
+        border-radius: 6px;
+        white-space: nowrap;
+    }
+
+    /* Logo text smaller */
+    .header span {
+        font-size: 16px !important;
+    }
+
+    /* Logo image adjust */
+    .header img {
+        height: 32px;
+    }
+
 
     /* Thumbnail resize */
     .thumbs img {
