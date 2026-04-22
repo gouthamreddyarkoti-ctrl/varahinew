@@ -328,7 +328,7 @@
     <div class="details">
 
         <div class="name">{{ product.name }}</div>
-        <div class="price">Rs. {{ product.price }} / {{ product.get_unit_display }}</div>
+        <div class="price">Rs. {{ product.price }} / {{ product.unit }}</div>
         <div class="info"><b>Category:</b> {{ product.category.name }}</div>
         <div class="info"><b>Material:</b> {{ product.material }}</div>
 
@@ -385,7 +385,7 @@
                         <img src="https://placehold.co/300x200/e5e7eb/9ca3af?text=No+Image" alt="No Image">
                     {% endif %}
                     <div class="r-name">{{ p.name }}</div>
-                    <div class="r-price">Rs. {{ p.price }} / {{ p.get_unit_display }}</div>
+                    <div class="r-price">Rs. {{ p.price }} / {{ p.units }}</div>
                 </a>
                 {% endfor %}
             </div>

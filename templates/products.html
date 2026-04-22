@@ -368,7 +368,7 @@
          data-name="{{ product.name|lower }}"
          data-category="{{ product.category.name }}"
          data-material="{{ product.material }}"
-        <div class="price">Rs. {{ product.price }} / {{ product.get_unit_display }}</div>
+         data-price="{{ product.price }}">
         <a href="{% url 'product_detail' product.id %}" class="card">
             <div class="img-wrap">
                 {% if product.image %}
@@ -380,7 +380,7 @@
             <div class="card-body">
                 <div class="product-name">{{ product.name }}</div>
                 <div class="category">{{ product.category.name }} — {{ product.material }}</div>
-                <div class="price">Rs. {{ product.price }}</div>
+                <div class="price">Rs. {{ product.price }}/{{ product.units }}</div>
                 <div class="desc">{{ product.description|truncatechars:90 }}</div>
                 <div class="btn">View Details</div>
             </div>
