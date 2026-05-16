@@ -151,7 +151,7 @@
             font-weight: 800;
         }
 
-       .about-btn {
+        .about-btn {
             background: var(--gold);
             color: var(--navy2);
             padding: 8px 18px;
@@ -165,85 +165,14 @@
         }
         .about-btn:hover { background: var(--gold-dark); transform: translateY(-1px); }
 
-        /* Fixed About Us on mobile */
-        @media (max-width: 768px) {
-            .about-btn {
-                position: fixed;
-                bottom: 80px;
-                right: 14px;
-                z-index: 300;
-                padding: 10px 16px;
-                font-size: 12px;
-                border-radius: 50px;
-                box-shadow: 0 4px 14px rgba(0,0,0,0.25);
-            }
-        }
-
-        /* Fixed About Us on mobile */
-        @media (max-width: 768px) {
-            .about-btn {
-                position: fixed;
-                bottom: 80px;
-                right: 14px;
-                z-index: 300;
-                padding: 10px 16px;
-                font-size: 12px;
-                border-radius: 50px;
-                box-shadow: 0 4px 14px rgba(0,0,0,0.25);
-            }
-        }
-
         /* Mobile search row */
         .mobile-search-row {
             display: none;
             background: var(--navy2);
             padding: 0 12px 10px;
         }
-
-        @media (max-width: 768px) {
-            .mobile-search-row { display: block; }
-        }
         .mobile-search-row .search-bar { max-width: 100%; }
 
-        /* ══════════════════════════════
-           CATEGORY STRIP (Flipkart style)
-        ══════════════════════════════ */
-        .cat-strip {
-            background: var(--white);
-            border-bottom: 1px solid var(--border);
-            overflow-x: auto;
-            scrollbar-width: none;
-        }
-        .cat-strip::-webkit-scrollbar { display: none; }
-        .cat-strip-inner {
-            display: flex;
-            gap: 0;
-            padding: 0 20px;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-        .cat-pill {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-            padding: 10px 18px;
-            font-size: 12px;
-            font-weight: 700;
-            color: var(--muted);
-            cursor: pointer;
-            white-space: nowrap;
-            border-bottom: 2px solid transparent;
-            transition: all 0.15s;
-            background: none;
-            border-left: none;
-            border-right: none;
-            border-top: none;
-            font-family: inherit;
-        }
-        .cat-pill:hover { color: var(--blue); border-bottom-color: var(--blue); }
-        .cat-pill.active { color: var(--blue); border-bottom-color: var(--blue); }
-        .cat-pill .cat-icon { font-size: 20px; }
 
         /* ══════════════════════════════
            MAIN BODY
@@ -1077,6 +1006,7 @@ function setCat(val, el) {
     activeCat = val;
     document.querySelectorAll('.cat-pill').forEach(function(p) { p.classList.remove('active'); });
     el.classList.add('active');
+    // sync sidebar radio
     var radios = document.querySelectorAll('input[name="sidecat"]');
     radios.forEach(function(r) { r.checked = (r.value === val); });
     filterProducts();
