@@ -11,15 +11,15 @@ class ProductImageInline(admin.TabularInline):
 
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('name', 'category', 'price','units')
-    list_filter = ('category',)
+    list_display = ('name', 'category', 'price', 'units', 'in_stock')  # ← add in_stock
+    list_filter = ('category', 'in_stock')                              # ← add in_stock
     search_fields = ('name', 'material', 'description')
 
     inlines = [ProductImageInline]
 
     fieldsets = (
         ('Basic Info', {
-            'fields': ('name', 'category', 'material', 'price','units')
+            'fields': ('name', 'category', 'material', 'price', 'units', 'in_stock')  # ← add in_stock
         }),
         ('Description', {
             'fields': ('description', 'extra_info')
@@ -28,7 +28,6 @@ class ProductAdmin(admin.ModelAdmin):
             'fields': ('image',)
         }),
     )
-
 
 admin.site.register(Category)
 admin.site.register(Product, ProductAdmin)
