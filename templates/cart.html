@@ -307,10 +307,10 @@
 <body>
 
 <div class="header">
-    <div class="header-logo">
-        <img src="{% static 'images/logo.png' %}" alt="Logo">
-        <span style="font-size:22px;font-weight:600;color:#facc15;">Shree Varahi Traders</span>
-    </div>
+   <a href="{% url 'product_list' %}" class="header-logo" style="text-decoration:none;">
+    <img src="{% static 'images/logo.png' %}" alt="Logo">
+    <span style="font-size:22px;font-weight:600;color:#facc15;">Shree Varahi Traders</span>
+</a>
   <a href="{% url 'product_list' %}" title="Home">
     <img src="https://cdn-icons-png.flaticon.com/512/25/25694.png"
          alt="Home"

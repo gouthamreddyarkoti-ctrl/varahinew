@@ -17,10 +17,19 @@ class Product(models.Model):
     description = models.TextField()
     extra_info = models.TextField(blank=True, null=True)
     image = models.ImageField(upload_to='products/', blank=True, null=True)
-    in_stock = models.BooleanField(default=True)  # ← ADD THIS
-
-    def __str__(self):
-        return self.name
+    in_stock = models.BooleanField(default=True)
+    colors = models.CharField(
+        max_length=300, blank=True, null=True,
+        help_text="Comma-separated e.g. Brown,Black,White"
+    )
+    dimensions = models.CharField(
+        max_length=300, blank=True, null=True,
+        help_text="Comma-separated e.g. 60x30x45cm, 90x40x75cm, 120x50x90cm"
+    )
+    available_sizes = models.CharField(
+    max_length=300, blank=True, null=True,
+    help_text="Format: size:price — e.g. 7ft:5000,8ft:6500,9ft:8000,10ft:9500 — add * for out of stock: 9ft*:8000"
+)
 
     def __str__(self):
         return self.name

@@ -5,387 +5,442 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ product.name }} | Shree Varahi Traders</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
-        * { box-sizing: border-box; }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-         body {
-           font-family: 'Segoe UI', Arial, sans-serif;
-           margin: 0;
-           background: #f4f6f8;
-       }
-        
-
-        .header {
-            background: #111827;
-            color: white;
-            padding: 15px 25px;
-            font-size: 20px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 100;
-            height: 56px;
+        :root {
+            --navy2:     #111827;
+            --gold:      #facc15;
+            --gold-dark: #eab308;
+            --blue:      #2563eb;
+            --blue-dark: #1d4ed8;
+            --green:     #16a34a;
+            --red:       #ef4444;
+            --bg:        #f1f3f6;
+            --white:     #ffffff;
+            --border:    #e2e8f0;
+            --text:      #111827;
+            --muted:     #6b7280;
+            --shadow-sm: 0 1px 4px rgba(0,0,0,0.08);
+            --shadow-md: 0 4px 16px rgba(0,0,0,0.12);
+            --radius:    6px;
         }
 
-        .header a {
-            color: #d1d5db;
-            text-decoration: none;
-            font-size: 14px;
+        body { font-family: 'Nunito', 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); }
+
+        /* ══ HEADER ══ */
+        .header { background: var(--navy2); position: sticky; top: 0; z-index: 200; box-shadow: 0 2px 8px rgba(0,0,0,0.4); }
+        .header-inner { display: flex; align-items: center; justify-content: space-between; padding: 10px 24px; max-width: 1400px; margin: 0 auto; }
+        .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+        .logo img { height: 38px; border-radius: 50%; }
+        .logo-text { font-size: 18px; font-weight: 800; color: var(--gold); white-space: nowrap; }
+        .logo-sub { font-size: 9px; color: #94a3b8; font-style: italic; }
+        .header-right { display: flex; align-items: center; gap: 12px; }
+        .back-link { color: #d1d5db; text-decoration: none; font-size: 13px; font-weight: 600; padding: 6px 14px; border-radius: var(--radius); border: 1px solid rgba(255,255,255,0.2); transition: all 0.2s; }
+        .back-link:hover { background: rgba(255,255,255,0.1); color: var(--gold); }
+        .cart-link { display: flex; align-items: center; gap: 6px; color: white; text-decoration: none; font-size: 13px; font-weight: 700; padding: 6px 14px; background: rgba(255,255,255,0.08); border-radius: var(--radius); transition: background 0.2s; }
+        .cart-link:hover { background: rgba(255,255,255,0.15); }
+        .cart-count { background: var(--gold); color: var(--navy2); border-radius: 50%; width: 20px; height: 20px; font-size: 11px; font-weight: 800; display: flex; align-items: center; justify-content: center; }
+
+        /* ══ BREADCRUMB ══ */
+        .breadcrumb { padding: 10px 24px; font-size: 12px; color: var(--muted); max-width: 1400px; margin: 0 auto; }
+        .breadcrumb a { color: var(--blue); text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+
+        /* ══ MAIN LAYOUT ══ */
+        .main { max-width: 1400px; margin: 0 auto; padding: 0 16px 40px; display: grid; grid-template-columns: 420px 1fr; gap: 16px; align-items: flex-start; }
+
+        /* ══ IMAGE PANEL ══ */
+        .img-panel { background: var(--white); border-radius: 10px; border: 1px solid var(--border); box-shadow: var(--shadow-sm); padding: 20px; position: sticky; top: 74px; }
+        .main-img-wrap { position: relative; border-radius: 8px; overflow: hidden; background: #f8fafc; margin-bottom: 12px; }
+        .main-img { width: 100%; height: 380px; object-fit: cover; display: block; transition: opacity 0.3s ease; }
+        .img-stock { position: absolute; top: 10px; left: 10px; font-size: 10px; font-weight: 800; padding: 4px 10px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .img-stock.in { background: var(--green); color: white; }
+        .img-stock.out { background: var(--red); color: white; }
+        .img-nav { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.9); border: none; border-radius: 50%; width: 34px; height: 34px; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-sm); transition: background 0.2s; z-index: 2; }
+        .img-nav:hover { background: white; }
+        .img-nav.prev { left: 10px; }
+        .img-nav.next { right: 10px; }
+        .thumbs { display: flex; gap: 8px; flex-wrap: wrap; }
+        .thumb { width: 58px; height: 58px; object-fit: cover; border-radius: 6px; cursor: pointer; border: 2px solid transparent; transition: border 0.2s; }
+        .thumb.active, .thumb:hover { border-color: var(--blue); }
+        .share-row { display: flex; align-items: center; gap: 10px; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border); }
+        .share-label { font-size: 12px; color: var(--muted); font-weight: 600; }
+        .share-btn { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; text-decoration: none; border: 1px solid var(--border); transition: all 0.2s; cursor: pointer; background: white; }
+        .share-btn:hover { transform: scale(1.1); }
+
+        /* ══ DETAILS PANEL ══ */
+        .details-panel { display: flex; flex-direction: column; gap: 12px; }
+        .detail-card { background: var(--white); border-radius: 10px; border: 1px solid var(--border); box-shadow: var(--shadow-sm); padding: 20px 24px; }
+        .prod-category { font-size: 11px; font-weight: 700; color: var(--blue); text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 6px; }
+        .prod-name { font-size: 22px; font-weight: 800; color: var(--text); line-height: 1.3; margin-bottom: 10px; }
+        .rating-row { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+        .rating-chip { display: flex; align-items: center; gap: 4px; background: var(--green); color: white; font-size: 13px; font-weight: 700; padding: 3px 10px; border-radius: 4px; }
+        .rating-count { font-size: 13px; color: var(--muted); }
+        .rating-sep { color: var(--border); }
+        .price-section { margin-bottom: 14px; }
+        .price-main { font-size: 28px; font-weight: 800; color: var(--text); }
+        .price-unit { font-size: 14px; color: var(--muted); font-weight: 600; margin-left: 4px; }
+        .price-note { font-size: 12px; color: var(--green); font-weight: 600; margin-top: 4px; }
+
+        /* ══ VARIANTS ══ */
+        .variant-section { margin-bottom: 16px; }
+        .variant-label { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+        .variant-label span { color: var(--muted); font-weight: 600; margin-left: 6px; }
+
+        /* Colors */
+        .color-options { display: flex; gap: 10px; flex-wrap: wrap; }
+        .color-swatch { width: 30px; height: 30px; border-radius: 50%; border: 3px solid transparent; cursor: pointer; transition: all 0.2s; outline: 2px solid transparent; position: relative; }
+        .color-swatch:hover, .color-swatch.active { border-color: white; outline-color: var(--blue); transform: scale(1.1); }
+        .color-swatch .color-tip { position: absolute; bottom: 38px; left: 50%; transform: translateX(-50%); background: var(--text); color: white; font-size: 10px; font-weight: 600; padding: 3px 8px; border-radius: 4px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.2s; }
+        .color-swatch:hover .color-tip { opacity: 1; }
+
+        /* Dimensions */
+        .dimension-options { display: flex; gap: 8px; flex-wrap: wrap; }
+        .dimension-chip { padding: 6px 14px; border: 1.5px solid var(--border); border-radius: 6px; font-size: 13px; font-weight: 700; cursor: pointer; background: white; color: var(--text); font-family: inherit; transition: all 0.15s; }
+        .dimension-chip:hover { border-color: var(--blue); color: var(--blue); }
+        .dimension-chip.active { background: var(--blue); color: white; border-color: var(--blue); }
+
+        /* Available Sizes */
+        .avail-sizes-options { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+        .avail-size-chip { padding: 7px 16px; border: 1.5px solid var(--border); border-radius: 20px; font-size: 13px; font-weight: 700; cursor: pointer; background: white; color: var(--text); font-family: inherit; transition: all 0.15s; }
+        .avail-size-chip:hover { border-color: var(--blue); color: var(--blue); background: #eff6ff; }
+        .avail-size-chip.active { background: var(--navy2); color: var(--gold); border-color: var(--navy2); }
+        .avail-size-chip.unavailable { opacity: 0.4; cursor: not-allowed; text-decoration: line-through; }
+        .avail-size-chip.unavailable:hover { border-color: var(--border); color: var(--text); background: white; }
+        .size-guide-hint { font-size: 11px; color: var(--blue); font-weight: 700; cursor: pointer; text-decoration: underline dotted; margin-left: 4px; }
+
+        /* Qty */
+        .qty-section { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+        .qty-label { font-size: 13px; font-weight: 700; color: var(--text); }
+        .qty-control { display: flex; align-items: center; border: 1.5px solid var(--border); border-radius: 8px; overflow: hidden; }
+        .qty-btn { background: #f8fafc; border: none; padding: 8px 14px; font-size: 18px; font-weight: 700; cursor: pointer; color: var(--text); transition: background 0.15s; }
+        .qty-btn:hover { background: #e2e8f0; }
+        .qty-num { padding: 8px 16px; font-size: 15px; font-weight: 700; border-left: 1.5px solid var(--border); border-right: 1.5px solid var(--border); min-width: 44px; text-align: center; }
+
+        /* ══ ORDER SUMMARY ══ */
+        .order-summary { background: #f0fdf4; border: 1.5px solid #bbf7d0; border-radius: 8px; padding: 14px 16px; margin-bottom: 16px; }
+        .order-summary-title { font-size: 12px; font-weight: 800; color: var(--green); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; }
+        .order-summary-rows { display: flex; flex-direction: column; gap: 5px; }
+        .order-summary-row { display: flex; justify-content: space-between; font-size: 13px; color: var(--text); }
+        .order-summary-row .osr-label { color: var(--muted); font-weight: 600; }
+        .order-summary-row .osr-val { font-weight: 700; }
+        .order-summary-divider { border: none; border-top: 1px solid #bbf7d0; margin: 8px 0; }
+        .order-summary-total { display: flex; justify-content: space-between; align-items: center; }
+        .order-summary-total .osr-label { font-size: 14px; font-weight: 800; color: var(--text); }
+        .order-summary-total .osr-total { font-size: 20px; font-weight: 800; color: var(--green); }
+
+        /* Action buttons */
+        .action-row { display: flex; gap: 10px; }
+        .btn-cart-main { flex: 1; padding: 13px; background: var(--gold); color: var(--navy2); border: none; border-radius: var(--radius); font-size: 15px; font-weight: 800; cursor: pointer; font-family: inherit; transition: background 0.2s; display: flex; align-items: center; justify-content: center; gap: 6px; }
+        .btn-cart-main:hover { background: var(--gold-dark); }
+        .btn-wa { flex: 1; padding: 13px; background: var(--green); color: white; border: none; border-radius: var(--radius); font-size: 15px; font-weight: 800; cursor: pointer; font-family: inherit; text-decoration: none; transition: background 0.2s; display: flex; align-items: center; justify-content: center; gap: 6px; }
+        .btn-wa:hover { background: #15803d; }
+
+        /* Highlights */
+        .highlights { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+        .highlights li { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; color: var(--text); }
+        .highlights li .hi { font-size: 16px; flex-shrink: 0; }
+
+        /* Info table */
+        .info-table { width: 100%; border-collapse: collapse; }
+        .info-table tr { border-bottom: 1px solid var(--border); }
+        .info-table tr:last-child { border-bottom: none; }
+        .info-table td { padding: 10px 8px; font-size: 13px; vertical-align: top; }
+        .info-table td:first-child { color: var(--muted); font-weight: 600; width: 140px; white-space: nowrap; }
+        .info-table td:last-child { color: var(--text); font-weight: 700; }
+        .size-pill-list { display: flex; flex-wrap: wrap; gap: 6px; }
+        .size-pill { padding: 2px 10px; border-radius: 20px; border: 1px solid var(--border); font-size: 12px; font-weight: 700; background: #f8fafc; }
+
+        /* Description */
+        .desc-text { font-size: 14px; color: #4b5563; line-height: 1.8; }
+
+        /* Section title */
+        .section-title { font-size: 15px; font-weight: 800; color: var(--text); margin-bottom: 14px; padding-bottom: 10px; border-bottom: 2px solid var(--gold); display: inline-block; }
+
+        /* Related products */
+        .related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; }
+        .r-card { background: var(--white); border-radius: 8px; border: 1px solid var(--border); text-decoration: none; color: inherit; overflow: hidden; transition: box-shadow 0.2s, transform 0.2s; box-shadow: var(--shadow-sm); }
+        .r-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+        .r-card img { width: 100%; height: 100px; object-fit: cover; display: block; }
+        .r-card-body { padding: 8px; }
+        .r-name { font-size: 12px; font-weight: 700; margin-bottom: 4px; }
+        .r-price { font-size: 13px; color: var(--green); font-weight: 800; }
+
+        /* Floating cart */
+        .float-cart { position: fixed; bottom: 24px; right: 24px; background: var(--navy2); color: white; border: 2px solid var(--gold); border-radius: 50px; padding: 12px 22px; font-size: 14px; font-weight: 800; display: flex; align-items: center; gap: 8px; text-decoration: none; box-shadow: 0 6px 20px rgba(0,0,0,0.3); z-index: 300; transition: transform 0.2s, background 0.2s; font-family: inherit; }
+        .float-cart:hover { transform: translateY(-3px); background: #1f2937; }
+        .float-badge { background: var(--gold); color: var(--navy2); border-radius: 50%; width: 22px; height: 22px; font-size: 11px; font-weight: 800; display: flex; align-items: center; justify-content: center; }
+
+        /* ══ MOBILE ══ */
+        @media (max-width: 900px) { .main { grid-template-columns: 1fr; padding: 0 10px 60px; } .img-panel { position: static; } }
+        @media (max-width: 600px) {
+            .header-inner { padding: 8px 12px; }
+            .logo-text { font-size: 14px; }
+            .logo img { height: 30px; }
+            .logo-sub { display: none; }
+            .back-link span { display: none; }
+            .main-img { height: 260px; }
+            .prod-name { font-size: 18px; }
+            .price-main { font-size: 22px; }
+            .action-row { flex-direction: column; }
+            .float-cart { bottom: 14px; right: 14px; padding: 10px 16px; font-size: 13px; }
         }
-
-        .header a:hover { color: #facc15; }
-
-        .page-body {
-            display: flex;
-            height: calc(100vh - 56px);
-            margin-top: 56px;
-        }
-
-        .image-section {
-            width: 50%;
-            background: white;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            border-right: 1px solid #e5e7eb;
-            height: calc(100vh - 56px);
-            overflow: hidden;
-        }
-
-        .main-img {
-            width: 100%;
-            flex: 1;
-            object-fit: cover;
-            border-radius: 10px;
-            transition: opacity 0.3s ease;
-            display: block;
-            max-height: calc(100vh - 180px);
-        }
-
-        .thumbs {
-            display: flex;
-            gap: 10px;
-            margin-top: 10px;
-            flex-wrap: wrap;
-        }
-
-        .thumbs img {
-            width: 60px;
-            height: 60px;
-            object-fit: cover;
-            border-radius: 6px;
-            cursor: pointer;
-            border: 2px solid transparent;
-        }
-
-        .thumbs img:hover { border: 2px solid #2563eb; }
-
-        .details {
-            width: 50%;
-            overflow-y: auto;
-            padding: 24px;
-            height: calc(100vh - 56px);
-            background: white;
-        }
-
-        .name { font-size: 24px; font-weight: 700; margin-bottom: 6px; }
-
-        .price {
-            font-size: 22px;
-            color: #16a34a;
-            font-weight: bold;
-            margin: 10px 0;
-        }
-
-        .info { font-size: 14px; margin: 5px 0; }
-
-        .section {
-            margin-top: 15px;
-            padding-top: 10px;
-            border-top: 1px solid #e5e7eb;
-        }
-
-        .section h3 { margin: 0 0 8px; font-size: 15px; }
-
-        .box {
-            background: #f9fafb;
-            padding: 12px;
-            border-radius: 8px;
-            font-size: 14px;
-            line-height: 1.6;
-        }
-
-        .buy-box {
-            margin-top: 15px;
-            padding: 15px;
-            border-radius: 12px;
-            background: #f9fafb;
-            border: 1px solid #e5e7eb;
-        }
-
-        .btn {
-            display: block;
-            margin-top: 10px;
-            padding: 11px;
-            text-align: center;
-            border-radius: 8px;
-            color: white;
-            text-decoration: none;
-            border: none;
-            cursor: pointer;
-            font-size: 15px;
-            font-weight: 600;
-            font-family: 'Segoe UI', Arial, sans-serif;
-            width: 100%;
-            transition: background 0.2s;
-        }
-
-        .buy { background: #2563eb; }
-        .buy:hover { background: #1d4ed8; }
-
-        .whatsapp { background: #16a34a; }
-        .whatsapp:hover { background: #15803d; }
-
-        .related { padding: 20px 0 0; }
-        .related h2 { font-size: 18px; margin-bottom: 14px; }
-
-        .related-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-            gap: 12px;
-        }
-
-        .r-card {
-            background: #f9fafb;
-            padding: 8px;
-            border-radius: 10px;
-            text-align: center;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-            text-decoration: none;
-            color: inherit;
-            display: block;
-            transition: transform 0.2s;
-            border: 1px solid #e5e7eb;
-        }
-
-        .r-card:hover { transform: translateY(-4px); }
-
-        .r-card img {
-            width: 100%;
-            height: 100px;
-            object-fit: cover;
-            border-radius: 8px;
-        }
-
-        .r-name { font-size: 13px; font-weight: 600; margin-top: 6px; }
-        .r-price { font-size: 13px; color: #16a34a; font-weight: bold; }
-
-        .floating-cart {
-            position: fixed;
-            bottom: 28px;
-            right: 28px;
-            background: #111827;
-            color: white;
-            border-radius: 50px;
-            padding: 14px 22px;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.25);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            z-index: 200;
-            text-decoration: none;
-            transition: background 0.2s, transform 0.2s;
-        }
-
-        .floating-cart:hover {
-            background: #1f2937;
-            transform: translateY(-2px);
-        }
-        .qty-box {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            margin: 10px 0;
-        }
-
-        .qty-box input {
-            width: 60px;
-            text-align: center;
-            padding: 6px;
-            border: 1px solid #d1d5db;
-            border-radius: 6px;
-        }
-
-        .qty-box button {
-            width: 30px;
-            height: 30px;
-            border: none;
-            background: #2563eb;
-            color: white;
-            border-radius: 6px;
-            cursor: pointer;
-        }
-
-        .cart-badge {
-            background: #ef4444;
-            color: white;
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            font-size: 11px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-          @media (max-width: 768px) {
-
-    /* Stack image on top, details below */
-    .page-body {
-        flex-direction: column;
-        height: auto;
-    }
-
-    .image-section {
-        width: 100%;
-        height: auto;
-        border-right: none;
-        border-bottom: 1px solid #e5e7eb;
-    }
-
-    .details {
-        width: 100%;
-        height: auto;
-        overflow: visible;
-    }
-
-    /* Make image fit nicely */
-    .main-img {
-        width: 100%;
-        height: auto;
-        max-height: 320px;
-        object-fit: cover;
-    }
-
-    /* Remove fixed height issues */
-    .image-section,
-    .details {
-        max-height: none;
-    }
-
-    /* Allow full page scroll */
-    body {
-        overflow: auto;
-    }
-}
     </style>
 </head>
-
 <body>
 
-<div class="header">
-    <div style="display:flex;align-items:center;justify-content:center;gap:10px;">
-        <img src="{% static 'images/logo.png' %}" style="height:40px;">
-        <span style="font-size:22px;font-weight:600;color:#facc15;">Shree Varahi Traders</span>
+<!-- ══ HEADER ══ -->
+<header class="header">
+    <div class="header-inner">
+        <a href="{% url 'product_list' %}" class="logo">
+            <img src="{% static 'images/logo.png' %}" alt="Logo">
+            <div>
+                <div class="logo-text">Shree Varahi Traders</div>
+                <div class="logo-sub">Quality You Can Trust</div>
+            </div>
+        </a>
+        <div class="header-right">
+            <a href="{% url 'product_list' %}" class="back-link">← <span>Back to Products</span></a>
+            <a href="{% url 'cart' %}" class="cart-link">
+                🛒 Cart <div class="cart-count" id="cartCount">0</div>
+            </a>
+        </div>
     </div>
-  <a href="{% url 'product_list' %}" title="Home">
-    <img src="https://cdn-icons-png.flaticon.com/512/25/25694.png"
-         alt="Home"
-         style="width:22px; height:22px; filter: invert(1);">
-</a>
+</header>
+
+<!-- ══ BREADCRUMB ══ -->
+<div class="breadcrumb">
+    <a href="{% url 'product_list' %}">Home</a> ›
+    <a href="{% url 'product_list' %}">{{ product.category.name }}</a> ›
+    {{ product.name }}
 </div>
 
-<div class="page-body">
+<!-- ══ MAIN ══ -->
+<div class="main">
 
-    <div class="image-section">
-        {% if product.image %}
-            <img id="mainImage" class="main-img" src="{{ product.image.url }}" alt="{{ product.name }}">
-        {% elif product.images.first %}
-            <img id="mainImage" class="main-img" src="{{ product.images.first.image.url }}" alt="{{ product.name }}">
-        {% else %}
-            <img id="mainImage" class="main-img" src="https://placehold.co/600x400/e5e7eb/9ca3af?text=No+Image" alt="No Image">
-        {% endif %}
+    <!-- IMAGE PANEL -->
+    <div class="img-panel">
+        <div class="main-img-wrap">
+            {% if product.in_stock %}
+                <span class="img-stock in">In Stock</span>
+            {% else %}
+                <span class="img-stock out">Out of Stock</span>
+            {% endif %}
+            <button class="img-nav prev" onclick="prevImage()">‹</button>
+            <button class="img-nav next" onclick="nextImage()">›</button>
+            {% if product.image %}
+                <img id="mainImage" class="main-img" src="{{ product.image.url }}" alt="{{ product.name }}">
+            {% elif product.images.first %}
+                <img id="mainImage" class="main-img" src="{{ product.images.first.image.url }}" alt="{{ product.name }}">
+            {% else %}
+                <img id="mainImage" class="main-img" src="https://placehold.co/600x400/e2e8f0/94a3b8?text=No+Image" alt="No Image">
+            {% endif %}
+        </div>
 
         <div class="thumbs">
             {% if product.image %}
-                <img src="{{ product.image.url }}" alt="Main">
+                <img class="thumb active" src="{{ product.image.url }}" alt="Main" onclick="showImage(0)">
             {% endif %}
             {% for img in product.images.all %}
-                <img src="{{ img.image.url }}" alt="View {{ forloop.counter }}">
+                <img class="thumb" src="{{ img.image.url }}" alt="View {{ forloop.counter }}" onclick="showImage({{ forloop.counter }})">
             {% endfor %}
+        </div>
+
+        <div class="share-row">
+            <span class="share-label">Share:</span>
+            <a class="share-btn" href="https://wa.me/?text={{ product.name }}%20-%20Rs.{{ product.price }}%20at%20Shree%20Varahi%20Traders" target="_blank" title="WhatsApp">📱</a>
+            <button class="share-btn" onclick="navigator.clipboard.writeText(window.location.href); this.textContent='✅'" title="Copy Link">🔗</button>
         </div>
     </div>
 
-    <div class="details">
+    <!-- DETAILS PANEL -->
+    <div class="details-panel">
 
-        <div class="name">{{ product.name }}</div>
-        <div class="price">Rs. {{ product.price }} / {{ product.units }}</div>
-        <div class="info"><b>Category:</b> {{ product.category.name }}</div>
-        <div class="info"><b>Material:</b> {{ product.material }}</div>
+        <!-- Title + Rating + Price + Variants + Order Summary + Actions -->
+        <div class="detail-card">
+            <div class="prod-category">{{ product.category.name }}</div>
+            <div class="prod-name">{{ product.name }}</div>
 
-        <div class="section">
-            <h3>Description</h3>
-            <div class="box">{{ product.description }}</div>
-        </div>
+            <div class="rating-row">
+                <div class="rating-chip">4.2 ★</div>
+                <span class="rating-count">Reviews</span>
+                <span class="rating-sep">|</span>
+                <span class="rating-count" style="color:var(--green); font-weight:700;">
+                    {% if product.in_stock %}✔ In Stock{% else %}✖ Out of Stock{% endif %}
+                </span>
+            </div>
 
-        <div class="section">
-            <h3>Additional Information</h3>
-            <div class="box">
-                {% if product.extra_info %}
-                    {{ product.extra_info }}
-                {% else %}
-                    No additional information available.
-                {% endif %}
+            <!-- Price -->
+            <div class="price-section">
+                <div>
+                    <span class="price-main" id="priceDisplay">₹{{ product.price|floatformat:0 }}</span>
+                    <span class="price-unit">/ {{ product.units }}</span>
+                </div>
+                <div class="price-note">✔ Inclusive of all charges</div>
+            </div>
+
+            <!-- Colors -->
+            {% if product.colors %}
+            <div class="variant-section">
+                <div class="variant-label">Color <span id="selectedColor"></span></div>
+                <div class="color-options" id="colorOptions"></div>
+            </div>
+            {% endif %}
+
+            <!-- Dimensions -->
+            {% if product.dimensions %}
+            <div class="variant-section">
+                <div class="variant-label">Dimensions <span id="selectedDimension"></span></div>
+                <div class="dimension-options" id="dimensionOptions"></div>
+            </div>
+            {% endif %}
+
+            <!-- Available Sizes -->
+            {% if product.available_sizes %}
+            <div class="variant-section">
+                <div class="variant-label">
+                    Size <span id="selectedAvailSize"></span>
+                    <span class="size-guide-hint" title="Select the size that fits your requirement">📐 Size Guide</span>
+                </div>
+                <div class="avail-sizes-options" id="availSizesOptions"></div>
+            </div>
+            {% endif %}
+
+            <!-- Quantity -->
+            <div class="qty-section">
+                <span class="qty-label">Quantity:</span>
+                <div class="qty-control">
+                    <button class="qty-btn" onclick="changeQty(-1)">−</button>
+                    <div class="qty-num" id="qtyDisplay">1</div>
+                    <button class="qty-btn" onclick="changeQty(1)">+</button>
+                </div>
+            </div>
+
+            <!-- Order Summary -->
+            <div class="order-summary">
+                <div class="order-summary-title">📋 Order Summary</div>
+                <div class="order-summary-rows">
+                    <div class="order-summary-row">
+                        <span class="osr-label">Product</span>
+                        <span class="osr-val">{{ product.name }}</span>
+                    </div>
+                    {% if product.colors %}
+                    <div class="order-summary-row">
+                        <span class="osr-label">Color</span>
+                        <span class="osr-val" id="summaryColor">—</span>
+                    </div>
+                    {% endif %}
+                    {% if product.dimensions %}
+                    <div class="order-summary-row">
+                        <span class="osr-label">Dimension</span>
+                        <span class="osr-val" id="summaryDim">—</span>
+                    </div>
+                    {% endif %}
+                    {% if product.available_sizes %}
+                    <div class="order-summary-row">
+                        <span class="osr-label">Size</span>
+                        <span class="osr-val" id="summarySize">—</span>
+                    </div>
+                    {% endif %}
+                    <div class="order-summary-row">
+                        <span class="osr-label">Unit Price</span>
+                        <span class="osr-val" id="summaryUnitPrice">₹{{ product.price|floatformat:0 }}</span>
+                    </div>
+                    <div class="order-summary-row">
+                        <span class="osr-label">Quantity</span>
+                        <span class="osr-val" id="summaryQty">1</span>
+                    </div>
+                </div>
+                <hr class="order-summary-divider">
+                <div class="order-summary-total">
+                    <span class="osr-label">Total Amount</span>
+                    <span class="osr-total" id="summaryTotal">₹{{ product.price|floatformat:0 }}</span>
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="action-row">
+                <button class="btn-cart-main" id="addCartBtn"
+                    data-id="{{ product.id }}"
+                    data-name="{{ product.name }}"
+                    data-price="{{ product.price }}"
+                    data-image="{% if product.image %}{{ product.image.url }}{% endif %}"
+                    data-category="{{ product.category.name }}"
+                    data-material="{{ product.material }}"
+                    {% if not product.in_stock %}disabled style="opacity:0.5;cursor:not-allowed;"{% endif %}>
+                    🛒 Add to Cart
+                </button>
+                <button class="btn-wa" id="whatsappBtn">
+                    📱 WhatsApp Order
+                </button>
             </div>
         </div>
-        <div class="qty-label">Quantity</div>
-        <div class="qty-box">
-            <button type="button" onclick="changeQty(-1)">−</button>
-            <input type="number" id="qtyInput" value="1" min="1">
-            <button type="button" onclick="changeQty(1)">+</button>
+
+        <!-- Highlights -->
+        <div class="detail-card">
+            <div class="section-title">Highlights</div>
+            <ul class="highlights">
+                <li><span class="hi">🏷️</span><span><b>Material:</b> {{ product.material }}</span></li>
+                <li><span class="hi">📦</span><span><b>Unit:</b> {{ product.units }}</span></li>
+                <li><span class="hi">🏪</span><span><b>Category:</b> {{ product.category.name }}</span></li>
+                {% if product.dimensions %}
+                <li><span class="hi">📐</span><span><b>Dimensions:</b> {{ product.dimensions }}</span></li>
+                {% endif %}
+                {% if product.available_sizes %}
+                <li><span class="hi">📏</span><span><b>Available Sizes:</b> {{ product.available_sizes }}</span></li>
+                {% endif %}
+                <li><span class="hi">✔</span><span>High quality craftsmanship</span></li>
+                <li><span class="hi">🚚</span><span>Available &amp; Ready to Ship</span></li>
+                <li><span class="hi">🔒</span><span>Secure &amp; trusted purchase</span></li>
+            </ul>
         </div>
 
-        <div class="buy-box">
-            <div style="font-weight:600; margin-bottom:4px;">Shop now</div>
-            <button class="btn buy"
-                id="addCartBtn"
-                data-id="{{ product.id }}"
-                data-name="{{ product.name }}"
-                data-price="{{ product.price }}"
-                data-image="{% if product.image %}{{ product.image.url }}{% endif %}"
-                data-category="{{ product.category.name }}"
-                data-material="{{ product.material }}">
-                Add to Cart
-            </button>
-
-            <a href="https://wa.me/918639556127?text=I%20am%20interested%20in%20{{ product.name }}%20-%20Rs.{{ product.price }}"
-               class="btn whatsapp" target="_blank">Order via WhatsApp</a>
+        <!-- Specifications -->
+        <div class="detail-card">
+            <div class="section-title">Specifications</div>
+            <table class="info-table">
+                <tr><td>Product Name</td><td>{{ product.name }}</td></tr>
+                <tr><td>Category</td><td>{{ product.category.name }}</td></tr>
+                <tr><td>Material</td><td>{{ product.material }}</td></tr>
+                <tr><td>Price</td><td>₹{{ product.price|floatformat:0 }} / {{ product.units }}</td></tr>
+                <tr><td>Availability</td><td>{% if product.in_stock %}<span style="color:var(--green);font-weight:700;">In Stock</span>{% else %}<span style="color:var(--red);font-weight:700;">Out of Stock</span>{% endif %}</td></tr>
+                {% if product.colors %}<tr><td>Colors</td><td>{{ product.colors }}</td></tr>{% endif %}
+                {% if product.dimensions %}<tr><td>Dimensions</td><td>{{ product.dimensions }}</td></tr>{% endif %}
+                {% if product.available_sizes %}
+                <tr>
+                    <td>Available Sizes</td>
+                    <td><div class="size-pill-list" id="specSizePills"></div></td>
+                </tr>
+                {% endif %}
+            </table>
         </div>
 
+        <!-- Description -->
+        <div class="detail-card">
+            <div class="section-title">Description</div>
+            <p class="desc-text">{{ product.description }}</p>
+            {% if product.extra_info %}
+            <p class="desc-text" style="margin-top:12px;">{{ product.extra_info }}</p>
+            {% endif %}
+        </div>
+
+        <!-- Related Products -->
         {% if related_products %}
-        <div class="related">
-            <h2>Related Products</h2>
+        <div class="detail-card">
+            <div class="section-title">Related Products</div>
             <div class="related-grid">
                 {% for p in related_products %}
                 <a href="{% url 'product_detail' p.id %}" class="r-card">
-                    {% if p.image %}
-                        <img src="{{ p.image.url }}" alt="{{ p.name }}">
-                    {% elif p.images.first %}
-                        <img src="{{ p.images.first.image.url }}" alt="{{ p.name }}">
-                    {% else %}
-                        <img src="https://placehold.co/300x200/e5e7eb/9ca3af?text=No+Image" alt="No Image">
+                    {% if p.image %}<img src="{{ p.image.url }}" alt="{{ p.name }}">
+                    {% elif p.images.first %}<img src="{{ p.images.first.image.url }}" alt="{{ p.name }}">
+                    {% else %}<img src="https://placehold.co/300x200/e2e8f0/94a3b8?text=No+Image" alt="No Image">
                     {% endif %}
-                    <div class="r-name">{{ p.name }}</div>
-                    <div class="r-price">Rs. {{ p.price }} / {{ p.units }}</div>
+                    <div class="r-card-body">
+                        <div class="r-name">{{ p.name }}</div>
+                        <div class="r-price">₹{{ p.price|floatformat:0 }}</div>
+                    </div>
                 </a>
                 {% endfor %}
             </div>
@@ -395,162 +450,246 @@
     </div>
 </div>
 
-<a href="{% url 'cart' %}" class="floating-cart" id="floatingCart">
-    Cart <div class="cart-badge" id="cartBadge">0</div>
+<!-- Floating Cart -->
+<a href="{% url 'cart' %}" class="float-cart">
+    🛒 Cart <div class="float-badge" id="cartBadge">0</div>
 </a>
 
 <script>
-    document.querySelectorAll('.thumbs img').forEach(function(img) {
-        img.addEventListener('click', function() {
-            var main = document.getElementById('mainImage');
-            main.style.opacity = '0';
-            setTimeout(function() {
-                main.src = img.src;
-                main.style.opacity = '1';
-            }, 150);
-        });
-    });
+/* ══ SHARED STATE ══ */
+var unitPrice         = {{ product.price }};
+var qty               = 1;
+var selectedColor     = '';
+var selectedDimension = '';
+var selectedAvailSize = '';
 
-    function getCart() {
-        return JSON.parse(localStorage.getItem('varahi_cart') || '[]');
-    }
+/* ══ UPDATE SUMMARY ══ */
+function updateSummary() {
+    var total = Math.round(unitPrice * qty);
+    var fmt   = function(n) { return n.toLocaleString('en-IN'); };
 
-    function saveCart(cart) {
-        localStorage.setItem('varahi_cart', JSON.stringify(cart));
-        updateBadge();
-    }
-    function updateBadge() {
-        var cart = getCart();
-        var total = cart.reduce(function(sum, i) { return sum + i.qty; }, 0);
-        document.getElementById('cartBadge').textContent = total;
-    }
-    function changeQty(delta) {
-        const input = document.getElementById('qtyInput');
-        let value = parseInt(input.value) || 1;
-        value += delta;
-        if (value < 1) value = 1;
-        input.value = value;
-    }
+    document.getElementById('qtyDisplay').textContent    = qty;
+    document.getElementById('summaryQty').textContent    = qty;
+    document.getElementById('summaryTotal').textContent  = '₹' + fmt(total);
+    document.getElementById('summaryUnitPrice').textContent = '₹' + fmt(Math.round(unitPrice));
 
-    document.getElementById('addCartBtn').addEventListener('click', function() {
-        var btn = this;
-        var id = btn.dataset.id;
-        var name = btn.dataset.name;
-        var price = parseFloat(btn.dataset.price);
-        var image = btn.dataset.image;
-        var category = btn.dataset.category;
-        var material = btn.dataset.material;
-
-        var cart = getCart();
-        var qty = parseInt(document.getElementById('qtyInput').value) || 1;
-        var index = cart.findIndex(function(i) { return i.id === id; });
-        if (index > -1) {
-            cart[index].qty += qty;
-        } else {
-            cart.push({ id: id, name: name, price: price, image: image, category: category, material: material, qty: qty });
-        }
-        saveCart(cart);
-
-        btn.textContent = 'Added to Cart!';
-        btn.style.background = '#15803d';
-        setTimeout(function() {
-            btn.textContent = 'Add to Cart';
-            btn.style.background = '#2563eb';
-        }, 1200);
-        let startX = 0;
-let endX = 0;
-
-const mainImage = document.getElementById('mainImage');
-const images = Array.from(document.querySelectorAll('.thumbs img'));
-
-let currentIndex = 0;
-
-// Set initial image index
-if (images.length > 0) {
-    currentIndex = 0;
+    var sc = document.getElementById('summaryColor');
+    var sd = document.getElementById('summaryDim');
+    var ss = document.getElementById('summarySize');
+    if (sc) sc.textContent = selectedColor     || '—';
+    if (sd) sd.textContent = selectedDimension || '—';
+    if (ss) ss.textContent = selectedAvailSize || '—';
 }
 
-// -------------------------------
-// THUMB CLICK (keep your feature)
-// -------------------------------
-images.forEach((img, index) => {
-    img.addEventListener('click', function () {
-        showImage(index);
-    });
-});
-
-// -------------------------------
-// SWIPE (MOBILE)
-// -------------------------------
-mainImage.addEventListener('touchstart', function (e) {
-    startX = e.touches[0].clientX;
-});
-
-mainImage.addEventListener('touchend', function (e) {
-    endX = e.changedTouches[0].clientX;
-    handleSwipe();
-});
-
-function handleSwipe() {
-    let diff = startX - endX;
-
-    if (Math.abs(diff) < 50) return; // ignore small swipe
-
-    if (diff > 0) {
-        nextImage(); // swipe left
-    } else {
-        prevImage(); // swipe right
-    }
+function updatePriceDisplay(price) {
+    document.getElementById('priceDisplay').textContent = '₹' + Math.round(price).toLocaleString('en-IN');
 }
 
-// -------------------------------
-// KEYBOARD (DESKTOP)
-// -------------------------------
-document.addEventListener('keydown', function (e) {
+/* ══ IMAGE GALLERY ══ */
+var allImages = [];
+{% if product.image %}allImages.push("{{ product.image.url }}");{% endif %}
+{% for img in product.images.all %}allImages.push("{{ img.image.url }}");{% endfor %}
+if (allImages.length === 0) allImages.push("https://placehold.co/600x400/e2e8f0/94a3b8?text=No+Image");
 
-    const activeTag = document.activeElement.tagName.toLowerCase();
-
-    // Prevent conflict when typing
-    if (activeTag === 'input' || activeTag === 'textarea') return;
-
-    if (e.key === 'ArrowRight') {
-        nextImage();
-    }
-
-    if (e.key === 'ArrowLeft') {
-        prevImage();
-    }
-});
-
-// -------------------------------
-// IMAGE CHANGE LOGIC
-// -------------------------------
+var currentIndex = 0;
 function showImage(index) {
-    if (images.length === 0) return;
-
-    if (index < 0) index = images.length - 1;
-    if (index >= images.length) index = 0;
-
+    if (index < 0) index = allImages.length - 1;
+    if (index >= allImages.length) index = 0;
     currentIndex = index;
-
-    mainImage.style.opacity = "0";
-
-    setTimeout(() => {
-        mainImage.src = images[currentIndex].src;
-        mainImage.style.opacity = "1";
-    }, 150);
+    var main = document.getElementById('mainImage');
+    main.style.opacity = '0';
+    setTimeout(function() { main.src = allImages[currentIndex]; main.style.opacity = '1'; }, 150);
+    document.querySelectorAll('.thumb').forEach(function(t, i) { t.classList.toggle('active', i === currentIndex); });
 }
+function nextImage() { showImage(currentIndex + 1); }
+function prevImage() { showImage(currentIndex - 1); }
 
-function nextImage() {
-    showImage(currentIndex + 1);
-}
+var touchStartX = 0;
+document.getElementById('mainImage').addEventListener('touchstart', function(e) { touchStartX = e.touches[0].clientX; });
+document.getElementById('mainImage').addEventListener('touchend', function(e) {
+    var diff = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) { diff > 0 ? nextImage() : prevImage(); }
+});
+document.addEventListener('keydown', function(e) {
+    if (['input','textarea'].includes(document.activeElement.tagName.toLowerCase())) return;
+    if (e.key === 'ArrowRight') nextImage();
+    if (e.key === 'ArrowLeft')  prevImage();
+});
 
-function prevImage() {
-    showImage(currentIndex - 1);
-}
+/* ══ COLOR SWATCHES ══ */
+var colorMap = {
+    'brown':'#8B4513','black':'#1a1a1a','white':'#f5f5f5','grey':'#9ca3af','gray':'#9ca3af',
+    'red':'#ef4444','blue':'#3b82f6','green':'#16a34a','yellow':'#facc15','pink':'#f472b6',
+    'orange':'#f97316','purple':'#a855f7','navy':'#1e3a5f','maroon':'#7f1d1d','ivory':'#fffff0',
+    'teak':'#8B6914','walnut':'#5C4033','oak':'#C9A96E','mahogany':'#C04000','pine':'#D4A574',
+    'silver':'#C0C0C0','gold':'#FFD700','beige':'#F5F5DC','cream':'#FFFDD0'
+};
+
+{% if product.colors %}
+var colors         = "{{ product.colors }}".split(',').map(function(c){return c.trim();}).filter(Boolean);
+var colorContainer = document.getElementById('colorOptions');
+var selectedColorEl= document.getElementById('selectedColor');
+
+colors.forEach(function(color, i) {
+    var swatch = document.createElement('div');
+    swatch.className = 'color-swatch' + (i === 0 ? ' active' : '');
+    var hex = colorMap[color.toLowerCase()] || '#aaaaaa';
+    swatch.style.background = hex;
+    swatch.title = color;
+    swatch.innerHTML = '<span class="color-tip">' + color + '</span>';
+    swatch.addEventListener('click', function() {
+        document.querySelectorAll('.color-swatch').forEach(function(s){s.classList.remove('active');});
+        swatch.classList.add('active');
+        selectedColor = color;
+        selectedColorEl.textContent = ': ' + color;
+        updateSummary();
     });
+    colorContainer.appendChild(swatch);
+});
+if (colors.length > 0) { selectedColor = colors[0]; selectedColorEl.textContent = ': ' + colors[0]; }
+{% endif %}
 
-    updateBadge();
+/* ══ DIMENSION CHIPS ══ */
+{% if product.dimensions %}
+var dimensions         = "{{ product.dimensions }}".split(',').map(function(s){return s.trim();}).filter(Boolean);
+var dimensionContainer = document.getElementById('dimensionOptions');
+var selectedDimensionEl= document.getElementById('selectedDimension');
+
+dimensions.forEach(function(dim, i) {
+    var chip = document.createElement('button');
+    chip.className = 'dimension-chip' + (i === 0 ? ' active' : '');
+    chip.textContent = dim;
+    chip.addEventListener('click', function() {
+        document.querySelectorAll('.dimension-chip').forEach(function(c){c.classList.remove('active');});
+        chip.classList.add('active');
+        selectedDimension = dim;
+        selectedDimensionEl.textContent = ': ' + dim;
+        updateSummary();
+    });
+    dimensionContainer.appendChild(chip);
+});
+if (dimensions.length > 0) { selectedDimension = dimensions[0]; selectedDimensionEl.textContent = ': ' + dimensions[0]; }
+{% endif %}
+
+/* ══ AVAILABLE SIZES WITH PER-SIZE PRICING ══
+   Admin format: "7ft:5000,8ft:6500,9ft*:8000,10ft:9500"
+   (* = out of stock)
+*/
+{% if product.available_sizes %}
+var rawAvailSizes       = "{{ product.available_sizes }}".split(',').map(function(s){return s.trim();}).filter(Boolean);
+var availSizesContainer = document.getElementById('availSizesOptions');
+var selectedAvailSizeEl = document.getElementById('selectedAvailSize');
+var specSizePillsEl     = document.getElementById('specSizePills');
+
+rawAvailSizes.forEach(function(sizeRaw, i) {
+    var parts         = sizeRaw.split(':');
+    var sizeLabel     = parts[0].trim();
+    var sizePrice     = parts[1] ? parseFloat(parts[1].trim()) : unitPrice;
+    var isUnavailable = sizeLabel.endsWith('*');
+    var size          = isUnavailable ? sizeLabel.slice(0, -1) : sizeLabel;
+
+    var chip = document.createElement('button');
+    chip.className = 'avail-size-chip'
+        + (isUnavailable ? ' unavailable' : '')
+        + (!isUnavailable && i === 0 ? ' active' : '');
+    chip.textContent = size;
+    chip.title = isUnavailable ? size + ' — Not available' : size + ' — ₹' + sizePrice.toLocaleString('en-IN');
+
+    if (!isUnavailable) {
+        chip.addEventListener('click', function() {
+            document.querySelectorAll('.avail-size-chip').forEach(function(c){c.classList.remove('active');});
+            chip.classList.add('active');
+            selectedAvailSize = size;
+            selectedAvailSizeEl.textContent = ': ' + size;
+            unitPrice = sizePrice;
+            updatePriceDisplay(sizePrice);
+            updateSummary();
+        });
+    }
+    availSizesContainer.appendChild(chip);
+
+    if (specSizePillsEl) {
+        var pill = document.createElement('span');
+        pill.className = 'size-pill';
+        pill.textContent = size + (isUnavailable ? ' ✕' : ' — ₹' + sizePrice.toLocaleString('en-IN'));
+        if (isUnavailable) pill.style.opacity = '0.45';
+        specSizePillsEl.appendChild(pill);
+    }
+});
+
+/* Auto-select first available size */
+var firstAvailRaw = rawAvailSizes.find(function(s){ return !s.split(':')[0].endsWith('*'); });
+if (firstAvailRaw) {
+    var fp = firstAvailRaw.split(':');
+    selectedAvailSize = fp[0].trim();
+    selectedAvailSizeEl.textContent = ': ' + selectedAvailSize;
+    if (fp[1]) {
+        unitPrice = parseFloat(fp[1].trim());
+        updatePriceDisplay(unitPrice);
+    }
+}
+{% endif %}
+
+/* ══ QUANTITY ══ */
+function changeQty(delta) {
+    qty = Math.max(1, qty + delta);
+    updateSummary();
+}
+
+/* ══ WHATSAPP ORDER BUTTON ══ */
+document.getElementById('whatsappBtn').addEventListener('click', function() {
+    var total = Math.round(unitPrice * qty).toLocaleString('en-IN');
+    var lines = [
+        '🛍️ *Order Enquiry — Shree Varahi Traders*',
+        '',
+        '*Product:* {{ product.name }}',
+        '*Category:* {{ product.category.name }}',
+        '*Material:* {{ product.material }}'
+    ];
+    if (selectedColor)     lines.push('*Color:* '     + selectedColor);
+    if (selectedDimension) lines.push('*Dimension:* ' + selectedDimension);
+    if (selectedAvailSize) lines.push('*Size:* '      + selectedAvailSize);
+    lines.push('*Unit Price:* ₹' + Math.round(unitPrice).toLocaleString('en-IN'));
+    lines.push('*Quantity:* ' + qty + ' {{ product.units|default:"unit" }}');
+    lines.push('');
+    lines.push('💰 *Total Amount: ₹' + total + '*');
+    lines.push('');
+    lines.push('Please confirm availability and delivery details. Thank you!');
+    window.open('https://wa.me/918639556127?text=' + encodeURIComponent(lines.join('\n')), '_blank');
+});
+
+/* ══ CART ══ */
+function getCart() { return JSON.parse(localStorage.getItem('varahi_cart') || '[]'); }
+function saveCart(c) { localStorage.setItem('varahi_cart', JSON.stringify(c)); updateBadge(); }
+function updateBadge() {
+    var total = getCart().reduce(function(s, i){ return s + i.qty; }, 0);
+    document.getElementById('cartBadge').textContent = total;
+    document.getElementById('cartCount').textContent = total;
+}
+
+document.getElementById('addCartBtn').addEventListener('click', function() {
+    var btn  = this;
+    var cart = getCart();
+    var id   = btn.dataset.id;
+    var idx  = cart.findIndex(function(i){ return i.id === id; });
+    if (idx > -1) { cart[idx].qty += qty; }
+    else cart.push({
+        id: id, name: btn.dataset.name,
+        price: unitPrice,
+        image: btn.dataset.image,
+        category: btn.dataset.category,
+        material: btn.dataset.material,
+        qty: qty
+    });
+    saveCart(cart);
+    btn.textContent = '✔ Added to Cart!';
+    btn.style.background = '#16a34a';
+    setTimeout(function(){ btn.innerHTML = '🛒 Add to Cart'; btn.style.background = ''; }, 1400);
+});
+
+/* ══ INIT ══ */
+updateBadge();
+updateSummary();
 </script>
 
 </body>

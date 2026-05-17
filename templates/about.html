@@ -176,11 +176,12 @@
 <body>
 
 <!-- Header -->
-<div class="header">
-    <img src="{% static 'images/logo.png' %}" alt="Logo">
-    <span>Shree Varahi Traders</span>
+ <div class="header">
+<a href="{% url 'product_list' %}" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
+    <img src="{% static 'images/logo.png' %}" style="height:40px;">
+    <span style="font-size:22px;font-weight:600;color:#facc15;">Shree Varahi Traders</span>
+</a>
 </div>
-
 <!-- Info Bar -->
 <div class="info-bar">
     <span>🏪 <strong>Dealer:</strong> G.V. Reddy</span>
